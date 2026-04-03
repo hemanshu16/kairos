@@ -10,18 +10,15 @@ const NotesPanel: React.FC = () => {
   const [noteBody, setNoteBody] = useState<string>('');
 
   const handleNewNote = () => {
-    const id = addNote('Untitled Note', '');
-    const note = notes.find((n) => n.id === id);
-    if (note) {
-      setEditingNote(note);
-      setNoteTitle('Untitled Note');
-      setNoteBody('');
-    } else {
-      // In case state hasn't updated yet, mock it for editing
-      setEditingNote({ id, title: 'Untitled Note', body: '', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() });
-      setNoteTitle('Untitled Note');
-      setNoteBody('');
-    }
+    const id = addNote('', ''); // Start with empty instead of "Untitled"
+    const note = notes.find((n) => n.id === id) || { 
+      id, title: '', body: '', 
+      createdAt: new Date().toISOString(), 
+      updatedAt: new Date().toISOString() 
+    };
+    setEditingNote(note);
+    setNoteTitle('');
+    setNoteBody('');
   };
 
   const handleEditNote = (note: Note) => {
@@ -49,23 +46,23 @@ const NotesPanel: React.FC = () => {
   return (
     <div className={styles.panel}>
       <div className={styles.header}>
-        <h2 className={styles.title}>NOTES</h2>
+        <div className={styles.title}>YOUR NOTES</div>
         <button className={styles.addBtn} onClick={handleNewNote}>
-          + New Note
+          + NEW NOTE
         </button>
       </div>
 
       {/* Notes Grid */}
       <div className={styles.notesGrid}>
         {notes.length === 0 ? (
-          <p className={styles.emptyState}>No notes yet. Create one above!</p>
+          <div className={styles.emptyState}>NO NOTES YET</div>
         ) : (
           notes.map((note) => (
             <div key={note.id} className={styles.noteCard} onClick={() => handleEditNote(note)}>
-              <div className={styles.noteTitle}>{note.title || 'Untitled'}</div>
-              <div className={styles.notePreview}>{note.body || 'Empty note'}</div>
+              <div className={styles.noteTitle}>{note.title || 'Untitled Note'}</div>
+              <div className={styles.notePreview}>{note.body || 'Empty note...'}</div>
               <div className={styles.noteDate}>
-                {format(new Date(note.updatedAt), 'MMM d, yyyy')}
+                {format(new Date(note.updatedAt), 'MMM d, h:mm a')}
               </div>
             </div>
           ))
@@ -81,18 +78,19 @@ const NotesPanel: React.FC = () => {
               className={styles.titleInput}
               value={noteTitle}
               onChange={(e) => setNoteTitle(e.target.value)}
-              placeholder="Note title..."
+              placeholder="Note title"
+              autoFocus={!noteTitle}
             />
             <textarea
               className={styles.bodyInput}
               value={noteBody}
               onChange={(e) => setNoteBody(e.target.value)}
-              placeholder="Start writing..."
-              autoFocus
+              placeholder="Start writing your thoughts..."
+              autoFocus={!!noteTitle}
             />
             <div className={styles.actions}>
               <button className={styles.saveBtn} onClick={handleSaveNote}>
-                Save
+                SAVE
               </button>
               <button
                 className={styles.deleteBtn}
@@ -101,10 +99,10 @@ const NotesPanel: React.FC = () => {
                   setEditingNote(null);
                 }}
               >
-                Delete
+                DELETE
               </button>
               <button className={styles.closeBtn} onClick={handleCloseEditor}>
-                Close
+                CLOSE
               </button>
             </div>
           </div>
@@ -113,5 +111,6 @@ const NotesPanel: React.FC = () => {
     </div>
   );
 };
+
 
 export default NotesPanel;

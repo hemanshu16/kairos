@@ -1,0 +1,208 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modalContent {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(22, 24, 33, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.8);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: rgba(232, 224, 208, 0.6);
+  font-weight: 800;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.closeBtn:hover {
+  color: #fff;
+}
+
+.taskInput {
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 18px 24px;
+  font-size: 16px;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  margin-bottom: 32px;
+  box-sizing: border-box;
+}
+
+.taskInput:focus {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.taskInput::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.sectionTitle {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(232, 224, 208, 0.6);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.promptsRow {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.promptChip {
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Space Mono', monospace;
+}
+
+.promptChip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.promptChip.active {
+  background: #FFE483;
+  color: #111;
+  font-weight: 700;
+}
+
+.customPromptRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+
+.customPromptInput {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  width: 60px;
+  padding: 8px;
+  color: #fff;
+  font-family: 'Space Mono', monospace;
+  text-align: center;
+  outline: none;
+  font-weight: 700;
+}
+
+.customPromptInput::-webkit-outer-spin-button,
+.customPromptInput::-webkit-inner-spin-button,
+.customInputBtn::-webkit-outer-spin-button,
+.customInputBtn::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.customActionRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
+.customInputBtn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 16px;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  width: 170px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.customInputBtn:focus {
+  border-color: #F8AF3C;
+}
+
+.goBtn {
+  background: #F8AF3C;
+  color: #111;
+  border: none;
+  border-radius: 16px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+
+.goBtn:hover {
+  background: #ffc24d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(248, 175, 60, 0.3);
+}
+
+.cancelBtn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.3);
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: color 0.2s;
+}
+
+.cancelBtn:hover {
+  color: rgba(255, 255, 255, 0.8);
+}

@@ -1,0 +1,52 @@
+.statsStrip {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(24px);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  z-index: 150;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statLabel {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(232, 224, 208, 0.4);
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.statVal {
+  font-size: 16px;
+  font-family: 'Space Mono', monospace;
+  color: #fff;
+  font-weight: 700;
+}
+
+.decSmall {
+  font-size: 10px;
+  color: rgba(232, 224, 208, 0.5);
+  margin-left: 1px;
+}
+
+@media (max-width: 768px) {
+  .statsStrip {
+    gap: 20px;
+    padding: 10px 12px;
+  }
+  .statVal {
+    font-size: 14px;
+  }
+}

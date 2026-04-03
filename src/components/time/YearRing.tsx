@@ -1,100 +1,93 @@
 import React, { useMemo } from 'react';
+import { useTime } from '../../hooks/useTime';
+import { useApp } from '../../contexts/AppContext';
 import styles from './YearRing.module.css';
 
-interface YearSegment {
-  month: string;
-  startAngle: number;
-  endAngle: number;
-  isPast: boolean;
-  isCurrent: boolean;
-}
-
 const YearRing: React.FC = () => {
-  const { segments, year, daysLeft } = useMemo(() => {
-    const now = new Date();
-    const currentMonth = now.getMonth(); // 0-11
-    const year = now.getFullYear();
+  const { birthDate, lifeExpectancy } = useApp();
+  const timeData = useTime(birthDate, lifeExpectancy);
 
-    // Calculate days left in year
+  const { year, daysLeft, pct, currentMonth } = useMemo(() => {
+    const now = new Date();
+    const year = now.getFullYear();
     const startOfNextYear = new Date(year + 1, 0, 1);
     const diffMs = startOfNextYear.getTime() - now.getTime();
     const daysLeft = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+    
+    return { 
+      year, 
+      daysLeft, 
+      pct: timeData.year.percentage,
+      currentMonth: now.getMonth()
+    };
+  }, [timeData.year.percentage]);
 
-    const monthNames = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+  const labels = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+  const segments = useMemo(() => {
+    const r1 = 44;
+    const r2 = 66;
+    const items = [];
 
-    const segments: YearSegment[] = monthNames.map((month, index) => {
-      const startAngle = (index * 30 - 90) * (Math.PI / 180);
-      const endAngle = ((index + 1) * 30 - 90) * (Math.PI / 180);
+    for (let i = 0; i < 12; i++) {
+      const angleStart = (i * 30) - 90 + 2;
+      const angleEnd = ((i + 1) * 30) - 90 - 2;
+      
+      const x1 = 80 + r1 * Math.cos(angleStart * Math.PI / 180);
+      const y1 = 80 + r1 * Math.sin(angleStart * Math.PI / 180);
+      const x2 = 80 + r2 * Math.cos(angleStart * Math.PI / 180);
+      const y2 = 80 + r2 * Math.sin(angleStart * Math.PI / 180);
+      const x3 = 80 + r2 * Math.cos(angleEnd * Math.PI / 180);
+      const y3 = 80 + r2 * Math.sin(angleEnd * Math.PI / 180);
+      const x4 = 80 + r1 * Math.cos(angleEnd * Math.PI / 180);
+      const y4 = 80 + r1 * Math.sin(angleEnd * Math.PI / 180);
 
-      return {
-        month,
-        startAngle,
-        endAngle,
-        isPast: index < currentMonth,
-        isCurrent: index === currentMonth
-      };
-    });
+      const path = `M ${x1} ${y1} L ${x2} ${y2} A ${r2} ${r2} 0 0 1 ${x3} ${y3} L ${x4} ${y4} A ${r1} ${r1} 0 0 0 ${x1} ${y1} Z`;
 
-    return { segments, year, daysLeft };
-  }, []);
+      let fill = 'rgba(255, 255, 255, 0.05)';
+      if (i < currentMonth) fill = 'rgba(146, 110, 43, 0.6)';
+      else if (i === currentMonth) fill = 'var(--gold)';
 
-  const cx = 100;
-  const cy = 100;
-  const innerRadius = 65;
-  const outerRadius = 88;
-  const labelRadius = 96;
+      // Label positioning
+      const lR = 76;
+      const lA = (i * 30) - 90 + 15;
+      const lx = 80 + lR * Math.cos(lA * Math.PI / 180);
+      const ly = 80 + lR * Math.sin(lA * Math.PI / 180);
 
-  // Generate SVG path for each segment
-  const createSegmentPath = (startAngle: number, endAngle: number, ir: number, or: number) => {
-    const x1 = cx + Math.cos(startAngle) * ir;
-    const y1 = cy + Math.sin(startAngle) * ir;
-    const x2 = cx + Math.cos(endAngle) * ir;
-    const y2 = cy + Math.sin(endAngle) * ir;
-    const x3 = cx + Math.cos(endAngle) * or;
-    const y3 = cy + Math.sin(endAngle) * or;
-    const x4 = cx + Math.cos(startAngle) * or;
-    const y4 = cy + Math.sin(startAngle) * or;
-
-    return `M ${x1} ${y1} A ${ir} ${ir} 0 0 1 ${x2} ${y2} L ${x3} ${y3} A ${or} ${or} 0 0 0 ${x4} ${y4} Z`;
-  };
+      items.push({ path, fill, lx, ly, label: labels[i], isCurrent: i === currentMonth });
+    }
+    return items;
+  }, [currentMonth]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.title}>THIS YEAR</div>
+    <div className={styles.cleanWidget}>
+      <div className={styles.cardTitle}>THIS YEAR</div>
       <div className={styles.yearRingWrap}>
-        <svg className={styles.ring} viewBox="0 0 200 200" width="200" height="200">
-          {segments.map((segment, index) => (
-            <g key={index}>
-              <path
-                d={createSegmentPath(segment.startAngle, segment.endAngle, innerRadius, outerRadius)}
-                fill={segment.isPast ? '#926E2B' : segment.isCurrent ? '#f5a623' : 'rgba(245, 166, 35, 0.1)'}
-                stroke="rgba(245, 166, 35, 0.15)"
-                strokeWidth="1"
-                className={`${styles.segment} ${segment.isCurrent ? styles.current : ''}`}
-              />
-              {/* Month label outside the ring */}
+        <svg className={styles.ringSvg} viewBox="0 0 160 160">
+          {segments.map((seg, i) => (
+            <React.Fragment key={i}>
+              <path d={seg.path} fill={seg.fill} />
               <text
-                x={cx + Math.cos((segment.startAngle + segment.endAngle) / 2) * labelRadius}
-                y={cy + Math.sin((segment.startAngle + segment.endAngle) / 2) * labelRadius}
-                className={`${styles.monthLabel} ${segment.isCurrent ? styles.currentLabel : ''}`}
+                x={seg.lx}
+                y={seg.ly}
+                className={`${styles.monthLabel} ${seg.isCurrent ? styles.currentMonthLabel : ''}`}
                 textAnchor="middle"
-                dominantBaseline="middle"
+                dominantBaseline="central"
               >
-                {segment.month}
+                {seg.label}
               </text>
-            </g>
+            </React.Fragment>
           ))}
-          {/* Inner circle border */}
-          <circle cx={cx} cy={cy} r={innerRadius} fill="transparent" stroke="rgba(245, 166, 35, 0.12)" strokeWidth="1" />
         </svg>
-        {/* Center content: Year + Days Left */}
         <div className={styles.yearCenter}>
           <div className={styles.yearNum}>{year}</div>
-          <div className={styles.yearDaysLeft}>{daysLeft} days left</div>
+          <div className={styles.yearPct}>{pct.toFixed(2)}%</div>
+          <div className={styles.yearDaysLeftBanner}>{daysLeft} days left</div>
         </div>
       </div>
     </div>
   );
 };
 
+
 export default YearRing;
+

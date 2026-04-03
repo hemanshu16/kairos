@@ -1,0 +1,122 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modalContent {
+  width: 100%;
+  max-width: 440px;
+  background: rgba(26, 28, 46, 0.98);
+  border: 1px solid rgba(248, 175, 60, 0.1);
+  border-radius: 24px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
+  text-align: center;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.title {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: rgba(248, 175, 60, 0.6);
+  font-weight: 800;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.taskName {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.timerDisplay {
+  font-family: 'Space Mono', monospace;
+  font-size: 84px;
+  font-weight: 800;
+  color: #F8AF3C;
+  line-height: 1;
+  text-shadow: 0 0 40px rgba(248, 175, 60, 0.3);
+  margin: 16px 0;
+}
+
+.statusLabel {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 6px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 48px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.keepWorkingBtn {
+  background: #F8AF3C;
+  color: #111;
+  border: none;
+  border-radius: 16px;
+  padding: 18px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+
+.keepWorkingBtn:hover {
+  background: #ffc24d;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(248, 175, 60, 0.4);
+}
+
+.stopBtn {
+  background: none;
+  border: 1px solid rgba(255, 120, 120, 0.2);
+  color: rgba(255, 120, 120, 0.6);
+  border-radius: 16px;
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+
+.stopBtn:hover {
+  background: rgba(255, 120, 120, 0.1);
+  color: rgba(255, 120, 120, 1);
+  border-color: rgba(255, 120, 120, 0.4);
+}

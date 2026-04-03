@@ -1,76 +1,70 @@
-.widget {
+.cleanWidget {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   gap: 8px;
   padding: 16px 0;
-  flex: 0 1 auto;
+  flex: 1;
   min-width: 140px;
 }
 
 .ringWrap {
   position: relative;
-  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0;
 }
 
-.ringWrap svg {
-  overflow: visible;
-}
-
-.ringCenter {
+.svg {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 115%;
+  height: 115%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.markerGroup text {
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+}
+
+.centerDisc {
+  margin: auto;
+  pointer-events: none;
+  z-index: 10;
+  background: rgba(17, 19, 26, 0.95);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .ringTime {
   font-family: 'Space Mono', monospace;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   color: #fff;
-  letter-spacing: 0px;
-  line-height: 1.2;
+  letter-spacing: -0.5px;
+  line-height: 1;
 }
 
 .ringLabel {
-  font-size: 10px;
+  font-size: 8px;
   letter-spacing: 2px;
-  color: var(--text-dim);
+  color: rgba(232, 224, 208, 0.4);
   margin-top: 2px;
+  font-weight: 800;
   text-transform: uppercase;
-  font-family: 'Space Mono', monospace;
-  font-weight: 600;
 }
 
-.marker {
-  font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  font-weight: 600;
-  fill: var(--text-dim);
-}
-
-.hand {
-  transition: transform 0.1s linear;
-  filter: drop-shadow(0 0 2px var(--gold-dim));
-}
-
-.progressDot {
-  filter: drop-shadow(0 0 4px var(--gold));
-  transition: cx 0.1s linear, cy 0.1s linear;
-}
-
-@media (max-width: 380px) {
-  .ringWrap {
-    width: 120px !important;
-    height: 120px !important;
-  }
-
-  .ringTime {
-    font-size: 15px;
-  }
-}

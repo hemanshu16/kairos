@@ -1,24 +1,28 @@
-.container {
+.cleanWidget {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  min-width: 160px;
+  gap: 10px;
+  padding: 16px 0;
+  flex: 1;
+  min-width: 180px;
 }
 
-.title {
-  font-family: 'Space Mono', monospace;
+.cardTitle {
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  color: var(--text-dim);
+  letter-spacing: 2.5px;
+  color: rgba(232, 224, 208, 0.4);
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 8px;
 }
 
-.bars {
+.weekBars {
   display: flex;
-  gap: 6px;
+  gap: 10px;
   align-items: flex-end;
-  height: 130px;
+  height: 90px;
+  margin: 10px 0;
 }
 
 .barWrapper {
@@ -30,20 +34,23 @@
 
 .barContainer {
   width: 28px;
-  height: 110px;
-  background: var(--surface);
-  border-radius: 6px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  position: relative;
   overflow: hidden;
-  display: flex;
-  align-items: flex-end;
+}
+
+.pastContainer {
+  background: #926E2B;
 }
 
 .bar {
+  position: absolute;
+  bottom: 0;
   width: 100%;
-  background: var(--gold-dim);
-  border-radius: 6px;
-  transition: height 0.3s ease;
-  min-height: 0;
+  border-radius: 8px;
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .bar.past {
@@ -51,19 +58,33 @@
 }
 
 .bar.current {
-  background: linear-gradient(to top, var(--gold), var(--gold-light));
-  box-shadow: 0 0 10px var(--gold-dim);
+  background: var(--gold);
 }
 
 .label {
+  font-size: 10px;
+  color: rgba(232, 224, 208, 0.4);
+  letter-spacing: 1px;
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  font-weight: 600;
-  color: var(--text-dim);
-  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .currentLabel {
   color: var(--gold);
+  font-weight: bold;
+}
+
+.pct {
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  color: #fff;
   font-weight: 700;
 }
+
+.pctSmall {
+  font-size: 10px;
+  color: rgba(232, 224, 208, 0.4);
+  margin-left: 2px;
+}
+
+

@@ -7,7 +7,6 @@ import MonthGrid from '../time/MonthGrid';
 import YearRing from '../time/YearRing';
 import styles from './DashboardPanel.module.css';
 
-// Default quotes
 const defaultQuotes: string[] = [
   "Stars can't shine without darkness",
   "Time is the most valuable thing you can spend",
@@ -22,7 +21,7 @@ const defaultQuotes: string[] = [
 ];
 
 const DashboardPanel: React.FC = () => {
-  const { username, birthDate, lifeExpectancy } = useApp();
+  const { username, birthDate, lifeExpectancy, setActivePanel } = useApp();
   const timeData = useTime(birthDate, lifeExpectancy);
   const [showQuote, setShowQuote] = useState<boolean>(false);
   const [currentQuote, setCurrentQuote] = useState<number>(0);
@@ -55,25 +54,34 @@ const DashboardPanel: React.FC = () => {
     { position: 75, label: '18' }
   ];
 
-  // Format time for HOUR ring (HH:MM)
+  // Format time for HOUR ring (MM:SS) and DAY ring (HH:MM)
   const timeParts = timeData.time.split(':');
-  const hourDisplay = `${timeParts[0]}:${timeParts[1]}`;
+  const minSec = `${timeParts[1]}:${timeParts[2]}`;
+  const hourMin = `${timeParts[0]}:${timeParts[1]}`;
 
   return (
     <div className={styles.panel}>
-      {/* Greeting / Quote */}
-      <div className={styles.greeting}>
-        <h1 className={`${styles.greetingText} ${showQuote ? styles.quote : ''}`}>
-          {showQuote ? defaultQuotes[currentQuote] : `${timeData.greeting}${username ? `, ${username}` : ''}`}
-        </h1>
+      {/* Clock Section */}
+      <div 
+        className={styles.clockSection} 
+        onClick={() => setActivePanel('dashboard')}
+        title="Return to Dashboard"
+      >
+        <div className={styles.digitalClock}>{timeData.time}</div>
+        <div className={styles.dateStr}>{timeData.date}</div>
+        <div className={styles.greetingContainer}>
+          <div className={`${styles.greetingText} ${showQuote ? styles.quote : ''}`}>
+            {showQuote ? defaultQuotes[currentQuote] : `${timeData.greeting}${username ? `, ${username}` : ''}`}
+          </div>
+        </div>
       </div>
 
-      {/* Dashboard Grid — all widgets in one row */}
+      {/* Dashboard Grid */}
       <div className={styles.dashboardGrid}>
         {/* Hour Ring */}
         <ProgressRing
           percentage={timeData.hour.percentage}
-          value={hourDisplay}
+          value={minSec}
           label="HOUR"
           showHand={true}
           timeMarkers={hourMarkers}
@@ -82,7 +90,7 @@ const DashboardPanel: React.FC = () => {
         {/* Day Ring */}
         <ProgressRing
           percentage={timeData.day.percentage}
-          value={hourDisplay}
+          value={hourMin}
           label="DAY"
           showHand={true}
           timeMarkers={dayMarkers}
@@ -101,4 +109,6 @@ const DashboardPanel: React.FC = () => {
   );
 };
 
+
 export default DashboardPanel;
+

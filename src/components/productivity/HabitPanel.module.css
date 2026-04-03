@@ -1,70 +1,71 @@
 .panel {
   max-width: 800px;
   margin: 0 auto;
-  padding: 40px;
-  background: rgba(17, 19, 26, 0.4);
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 24px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  padding: 20px 40px;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .title {
   font-family: 'Space Mono', monospace;
-  font-size: 18px;
-  letter-spacing: 3px;
-  color: var(--gold);
-  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 4px;
+  color: var(--gold-dim);
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .inputRow {
   display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
+  gap: 12px;
+  margin-bottom: 32px;
 }
 
 .textInput {
   flex: 1;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 10px;
-  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 12px;
+  padding: 16px 20px;
   font-size: 15px;
   font-family: 'DM Sans', sans-serif;
   outline: none;
+  transition: border-color 0.2s;
 }
 
 .textInput:focus {
-  border-color: var(--gold-dim);
+  border-color: rgba(245, 166, 35, 0.4);
 }
 
 .textInput::placeholder {
-  color: var(--text-dim);
+  color: rgba(232, 224, 208, 0.3);
 }
 
 .addBtn {
-  background: var(--gold);
-  color: #111;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 24px;
-  font-size: 14px;
+  background: rgba(245, 166, 35, 0.1);
+  color: var(--gold);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: 12px;
+  padding: 0 28px;
+  font-size: 13px;
   cursor: pointer;
   font-weight: 700;
-  transition: opacity 0.2s;
-  font-family: 'DM Sans', sans-serif;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 1px;
 }
 
 .addBtn:hover {
-  opacity: 0.85;
+  background: var(--gold);
+  color: #111;
+  box-shadow: 0 0 20px rgba(245, 166, 35, 0.3);
 }
 
 .habitList {
@@ -74,69 +75,91 @@
 }
 
 .habitItem {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
   padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+}
+
+.habitItem:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 .habitTop {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   gap: 16px;
 }
 
 .habitName {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 700;
   flex: 1;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .habitStreak {
   font-family: 'Space Mono', monospace;
   font-size: 12px;
   color: var(--gold);
+  background: rgba(245, 166, 35, 0.1);
+  padding: 4px 12px;
+  border-radius: 12px;
+  letter-spacing: 1px;
 }
 
 .habitDel {
   background: none;
   border: none;
-  color: var(--text-dim);
+  color: rgba(232, 224, 208, 0.3);
   cursor: pointer;
   font-size: 24px;
-  padding: 0;
+  padding: 4px;
   transition: color 0.2s;
+  line-height: 1;
 }
 
 .habitDel:hover {
-  color: #ff6b6b;
+  color: #ff5252;
 }
 
 .habitWeek {
   display: flex;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .habitDayDot {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1.5px solid var(--border);
+  flex: 1;
+  aspect-ratio: 1;
+  max-width: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   font-size: 12px;
-  color: var(--text-dim);
+  color: rgba(232, 224, 208, 0.5);
   transition: all 0.2s;
   font-weight: 600;
+  font-family: 'Space Mono', monospace;
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .habitDayDot:hover {
-  border-color: var(--gold-dim);
-  background: var(--surface);
+  border-color: rgba(245, 166, 35, 0.4);
+  background: rgba(245, 166, 35, 0.05);
+  color: #fff;
 }
 
 .habitDayDot.done {
@@ -149,11 +172,18 @@
 .habitDayDot.todayRing {
   border-color: var(--gold);
   border-width: 2px;
+  color: #fff;
+}
+
+.habitDayDot.todayRing.done {
+  color: #111;
 }
 
 .emptyState {
   text-align: center;
-  color: var(--text-dim);
-  padding: 40px;
+  color: rgba(232, 224, 208, 0.3);
+  padding: 60px;
   font-size: 14px;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 2px;
 }

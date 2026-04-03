@@ -22,7 +22,7 @@ const TodoPanel: React.FC = () => {
   return (
     <div className={styles.panel}>
       <div className={styles.header}>
-        <h2 className={styles.title}>TODOS</h2>
+        <div className={styles.title}>YOUR TODOS</div>
       </div>
 
       {/* Categories */}
@@ -45,10 +45,10 @@ const TodoPanel: React.FC = () => {
           className={styles.textInput}
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
-          placeholder="Add a new todo..."
+          placeholder="What needs to be done?"
         />
         <button type="submit" className={styles.addBtn}>
-          Add
+          + ADD
         </button>
       </form>
 

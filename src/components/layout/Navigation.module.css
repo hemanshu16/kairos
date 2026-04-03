@@ -3,15 +3,16 @@
   top: 0;
   left: 0;
   width: 100%;
+  max-width: none;
   background: rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(245, 166, 35, 0.15);
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
   padding: 0 24px;
-  height: 60px;
+  height: 80px;
 }
 
 .navLogoGroup {
@@ -19,15 +20,17 @@
   flex-direction: column;
   align-items: flex-start;
   cursor: pointer;
-  transition: all 0.3s;
+  text-decoration: none;
+  width: 250px;
 }
 
 .navBrand {
   font-family: 'Space Mono', monospace;
   font-size: 22px;
   font-weight: bold;
-  color: var(--gold);
+  color: #f5a623;
   letter-spacing: 5px;
+  transition: all 0.3s;
   line-height: 1;
 }
 
@@ -35,10 +38,11 @@
   font-family: 'Crimson Pro', serif;
   font-style: italic;
   font-size: 14px;
-  color: var(--text-dim);
+  color: rgba(232, 224, 208, 0.5);
   margin-top: 6px;
+  transition: all 0.3s;
+  white-space: nowrap;
   line-height: 1;
-  transition: color 0.3s ease;
   min-width: 250px;
 }
 
@@ -48,61 +52,104 @@
 }
 
 .navLogoGroup:hover .navMeaning {
-  color: var(--gold);
+  color: #f5a623;
 }
 
 .navLinks {
   display: flex;
   flex: 1;
   justify-content: center;
-  gap: 8px;
   max-width: 600px;
   margin: 0 auto;
 }
 
 .navTab {
   flex: 1;
-  padding: 8px 12px;
+  padding: 12px 4px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   cursor: pointer;
   border: none;
   background: none;
-  color: var(--text-dim);
+  color: rgba(232, 224, 208, 0.5);
   font-size: 11px;
   font-weight: bold;
   letter-spacing: 2px;
-  transition: color 0.2s;
+  transition: all 0.2s;
   font-family: 'DM Sans', sans-serif;
 }
 
-.navIcon {
-  font-size: 20px;
-}
-
-.navLabel {
-  font-size: 10px;
-}
-
-.navTab.active {
-  color: var(--gold);
+.navTab svg {
+  width: 26px;
+  height: 26px;
+  transition: transform 0.2s;
 }
 
 .navTab:hover {
-  color: var(--text);
+  color: #e8e0d0;
+}
+
+.navTab:hover svg {
+  transform: translateY(-2px);
+}
+
+.navTab.active {
+  color: #f5a623;
 }
 
 .navActions {
   display: flex;
-  gap: 14px;
+  gap: 16px;
   align-items: center;
+  justify-content: flex-end;
+  width: 350px;
+}
+
+.tzSelector {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-family: 'Space Mono', monospace;
+  color: #f5a623;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.tzSelector:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.proBtn {
+  background: linear-gradient(135deg, #ffc857, #f5a623);
+  color: #111;
+  font-weight: bold;
+  font-size: 11px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(245, 166, 35, 0.3);
+  transition: transform 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  white-space: nowrap;
+}
+
+.proBtn:hover {
+  transform: scale(1.05);
 }
 
 .username {
-  font-size: 13px;
-  color: var(--text);
+  font-size: 12px;
+  color: rgba(232, 224, 208, 0.6);
   font-weight: 500;
   white-space: nowrap;
 }
+

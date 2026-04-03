@@ -5,15 +5,20 @@ import DashboardPanel from './DashboardPanel';
 import TodoPanel from '../productivity/TodoPanel';
 import HabitPanel from '../productivity/HabitPanel';
 import NotesPanel from '../productivity/NotesPanel';
-import FocusPanel from '../productivity/FocusPanel';
+import WorklogModal from '../productivity/WorklogModal';
+import FocusSetupModal from '../productivity/FocusSetupModal';
+import FocusProgressModal from '../productivity/FocusProgressModal';
 import Starfield from '../effects/Starfield';
 import SunMoonOrb from '../effects/SunMoonOrb';
 import FABMenu from '../fab/FABMenu';
+import StatsStrip from './StatsStrip';
 import { getTheme, applyTheme, getTimeDecimal } from '../../utils/skyTheme';
+import { useFocusManager } from '../../hooks/useFocusManager';
 import styles from './Dashboard.module.css';
 
 const Dashboard: React.FC = () => {
-  const { activePanel } = useApp();
+  const { activePanel, setActivePanel } = useApp();
+  const { startSession, isRunning, timeLeft, session, stopSession } = useFocusManager();
 
   // Dynamic sky gradient effect
   useEffect(() => {
@@ -25,7 +30,7 @@ const Dashboard: React.FC = () => {
     };
 
     updateTheme();
-    const interval = setInterval(updateTheme, 50);
+    const interval = setInterval(updateTheme, 1000); // Check once per second
     return () => clearInterval(interval);
   }, []);
 
@@ -39,8 +44,8 @@ const Dashboard: React.FC = () => {
         return <HabitPanel />;
       case 'notes':
         return <NotesPanel />;
+      case 'worklog':
       case 'focus':
-        return <FocusPanel />;
       default:
         return <DashboardPanel />;
     }
@@ -52,7 +57,36 @@ const Dashboard: React.FC = () => {
       <SunMoonOrb />
       <Navigation />
       <main className={styles.main}>{renderPanel()}</main>
+      
+      {/* Modals */}
+      {activePanel === 'worklog' && (
+        <WorklogModal onClose={() => setActivePanel('dashboard')} />
+      )}
+      
+      {activePanel === 'focus' && (
+        isRunning ? (
+          <FocusProgressModal 
+            task={session?.task || ''} 
+            timeLeft={timeLeft} 
+            onClose={() => setActivePanel('dashboard')} 
+            onStop={() => {
+              stopSession();
+              setActivePanel('dashboard');
+            }}
+          />
+        ) : (
+          <FocusSetupModal 
+            onClose={() => setActivePanel('dashboard')} 
+            onStart={(dur, prompt, task) => {
+               startSession(dur, prompt, task);
+               setActivePanel('dashboard');
+            }} 
+          />
+        )
+      )}
+
       <FABMenu />
+      <StatsStrip />
     </div>
   );
 };

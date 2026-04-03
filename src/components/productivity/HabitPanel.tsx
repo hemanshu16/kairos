@@ -18,7 +18,7 @@ const HabitPanel: React.FC = () => {
   return (
     <div className={styles.panel}>
       <div className={styles.header}>
-        <h2 className={styles.title}>HABITS</h2>
+        <div className={styles.title}>YOUR HABITS</div>
       </div>
 
       {/* Input */}
@@ -28,10 +28,10 @@ const HabitPanel: React.FC = () => {
           className={styles.textInput}
           value={newHabit}
           onChange={(e) => setNewHabit(e.target.value)}
-          placeholder="Track a new habit..."
+          placeholder="What habit do you want to build?"
         />
         <button type="submit" className={styles.addBtn}>
-          Add
+          + ADD
         </button>
       </form>
 
