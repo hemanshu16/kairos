@@ -5,7 +5,7 @@ import styles from './TodoPanel.module.css';
 const CATEGORIES = ['all', 'work', 'personal', 'health', 'learning'];
 
 const TodoPanel: React.FC = () => {
-  const { addTodo, toggleTodo, deleteTodo, getTodosByCategory } = useTodos();
+  const { todos, loading, addTodo, toggleTodo, deleteTodo, getTodosByCategory } = useTodos();
   const [newTodo, setNewTodo] = useState<string>('');
   const [activeCategory, setActiveCategory] = useState<string>('all');
 
@@ -23,6 +23,7 @@ const TodoPanel: React.FC = () => {
     <div className={styles.panel}>
       <div className={styles.header}>
         <div className={styles.title}>YOUR TODOS</div>
+        {loading && <div className={styles.loaderSmall}>Syncing...</div>}
       </div>
 
       {/* Categories */}
@@ -46,24 +47,30 @@ const TodoPanel: React.FC = () => {
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
           placeholder="What needs to be done?"
+          disabled={loading}
         />
-        <button type="submit" className={styles.addBtn}>
+        <button type="submit" className={styles.addBtn} disabled={loading || !newTodo.trim()}>
           + ADD
         </button>
       </form>
 
       {/* Todo List */}
       <div className={styles.todoList}>
-        {filteredTodos.length === 0 ? (
+        {loading && todos.length === 0 ? (
+          <div className={styles.loadingState}>
+            <div className={styles.pulse}></div>
+            <p>Loading your tasks...</p>
+          </div>
+        ) : filteredTodos.length === 0 ? (
           <p className={styles.emptyState}>No todos yet. Add one above!</p>
         ) : (
           filteredTodos.map((todo) => (
-            <div key={todo.id} className={`${styles.todoItem} ${todo.done ? styles.done : ''}`}>
+            <div key={todo.id} className={`${styles.todoItem} ${todo.completed ? styles.done : ''}`}>
               <div
-                className={`${styles.todoCheck} ${todo.done ? styles.checked : ''}`}
+                className={`${styles.todoCheck} ${todo.completed ? styles.checked : ''}`}
                 onClick={() => toggleTodo(todo.id)}
               >
-                {todo.done && '✓'}
+                {todo.completed && '✓'}
               </div>
               <div className={styles.todoText}>{todo.text}</div>
               {todo.category !== 'all' && (

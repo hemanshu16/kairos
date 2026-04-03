@@ -132,9 +132,78 @@
   background: rgba(255, 255, 255, 0.04);
 }
 
-/* Clerk wrapper */
-.clerkWrapper {
-  min-height: 200px;
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup label {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(232, 224, 208, 0.4);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.inputField {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.inputField:focus {
+  border-color: rgba(245, 166, 35, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.submitBtn {
+  margin-top: 8px;
+  background: #f5a623;
+  color: #111;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: #ffc857;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(245, 166, 35, 0.3);
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.errorMsg {
+  background: rgba(255, 82, 82, 0.1);
+  border: 1px solid rgba(255, 82, 82, 0.2);
+  color: #ff5252;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 /* Footer */

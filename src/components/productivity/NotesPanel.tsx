@@ -4,21 +4,28 @@ import { format } from 'date-fns';
 import styles from './NotesPanel.module.css';
 
 const NotesPanel: React.FC = () => {
-  const { notes, addNote, updateNote, deleteNote } = useNotes();
+  const { notes, loading, addNote, updateNote, deleteNote } = useNotes();
   const [editingNote, setEditingNote] = useState<Note | null>(null);
   const [noteTitle, setNoteTitle] = useState<string>('');
   const [noteBody, setNoteBody] = useState<string>('');
 
-  const handleNewNote = () => {
-    const id = addNote('', ''); // Start with empty instead of "Untitled"
-    const note = notes.find((n) => n.id === id) || { 
-      id, title: '', body: '', 
-      createdAt: new Date().toISOString(), 
-      updatedAt: new Date().toISOString() 
-    };
-    setEditingNote(note);
-    setNoteTitle('');
-    setNoteBody('');
+  const handleNewNote = async () => {
+    const id = await addNote('', ''); 
+    if (id) {
+      // The note might not be in the 'notes' array yet if we haven't refreshed
+      // but 'addNote' adds it to the state locally in useNotes
+      const newNote = { 
+        id, 
+        user_id: '', 
+        title: '', 
+        body: '', 
+        created_at: new Date().toISOString(), 
+        updated_at: new Date().toISOString() 
+      };
+      setEditingNote(newNote);
+      setNoteTitle('');
+      setNoteBody('');
+    }
   };
 
   const handleEditNote = (note: Note) => {
@@ -47,14 +54,22 @@ const NotesPanel: React.FC = () => {
     <div className={styles.panel}>
       <div className={styles.header}>
         <div className={styles.title}>YOUR NOTES</div>
-        <button className={styles.addBtn} onClick={handleNewNote}>
-          + NEW NOTE
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          {loading && <div className={styles.loaderSmall}>Syncing...</div>}
+          <button className={styles.addBtn} onClick={handleNewNote} disabled={loading}>
+            + NEW NOTE
+          </button>
+        </div>
       </div>
 
       {/* Notes Grid */}
       <div className={styles.notesGrid}>
-        {notes.length === 0 ? (
+        {loading && notes.length === 0 ? (
+          <div className={styles.loadingState}>
+            <div className={styles.pulse}></div>
+            <p>Loading your notes...</p>
+          </div>
+        ) : notes.length === 0 ? (
           <div className={styles.emptyState}>NO NOTES YET</div>
         ) : (
           notes.map((note) => (
@@ -62,7 +77,7 @@ const NotesPanel: React.FC = () => {
               <div className={styles.noteTitle}>{note.title || 'Untitled Note'}</div>
               <div className={styles.notePreview}>{note.body || 'Empty note...'}</div>
               <div className={styles.noteDate}>
-                {format(new Date(note.updatedAt), 'MMM d, h:mm a')}
+                {format(new Date(note.updated_at), 'MMM d, h:mm a')}
               </div>
             </div>
           ))

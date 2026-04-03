@@ -3,7 +3,7 @@ import useHabits from '../../hooks/useHabits';
 import styles from './HabitPanel.module.css';
 
 const HabitPanel: React.FC = () => {
-  const { habits, addHabit, toggleHabitDay, deleteHabit, getWeekDays, getStreak } = useHabits();
+  const { habits, loading, addHabit, toggleHabitDay, deleteHabit, getWeekDays, getStreak } = useHabits();
   const [newHabit, setNewHabit] = useState<string>('');
   const weekDays = getWeekDays();
 
@@ -19,6 +19,7 @@ const HabitPanel: React.FC = () => {
     <div className={styles.panel}>
       <div className={styles.header}>
         <div className={styles.title}>YOUR HABITS</div>
+        {loading && <div className={styles.loaderSmall}>Syncing...</div>}
       </div>
 
       {/* Input */}
@@ -29,15 +30,21 @@ const HabitPanel: React.FC = () => {
           value={newHabit}
           onChange={(e) => setNewHabit(e.target.value)}
           placeholder="What habit do you want to build?"
+          disabled={loading}
         />
-        <button type="submit" className={styles.addBtn}>
+        <button type="submit" className={styles.addBtn} disabled={loading || !newHabit.trim()}>
           + ADD
         </button>
       </form>
 
       {/* Habit List */}
       <div className={styles.habitList}>
-        {habits.length === 0 ? (
+        {loading && habits.length === 0 ? (
+          <div className={styles.loadingState}>
+            <div className={styles.pulse}></div>
+            <p>Loading your habits...</p>
+          </div>
+        ) : habits.length === 0 ? (
           <p className={styles.emptyState}>No habits yet. Start tracking one above!</p>
         ) : (
           habits.map((habit) => (
@@ -51,7 +58,7 @@ const HabitPanel: React.FC = () => {
               </div>
               <div className={styles.habitWeek}>
                 {weekDays.map((day) => {
-                  const isCompleted = habit.completedDates?.includes(day.dateString);
+                  const isCompleted = habit.completed_dates?.includes(day.dateString);
                   return (
                     <div
                       key={day.dateString}

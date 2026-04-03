@@ -153,3 +153,23 @@
   white-space: nowrap;
 }
 
+.logoutBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(232, 224, 208, 0.6);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: 'Space Mono', monospace;
+  font-weight: bold;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+}
+
+.logoutBtn:hover {
+  background: rgba(255, 82, 82, 0.1);
+  border-color: rgba(255, 82, 82, 0.3);
+  color: #ff5252;
+}
+

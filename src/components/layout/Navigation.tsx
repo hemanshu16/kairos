@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
-import { UserButton, useUser } from '@clerk/react';
+import { useAuth } from '../../contexts/AuthContext';
 import { useApp } from '../../contexts/AppContext';
 import styles from './Navigation.module.css';
 
 const Navigation: React.FC = () => {
   const { activePanel, setActivePanel } = useApp();
-  const { user } = useUser();
+  const { user, signOut } = useAuth();
   const [isLogoHovered, setIsLogoHovered] = useState<boolean>(false);
 
-  const displayName = user?.firstName || user?.username || '';
+  const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || '';
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+    } catch (err) {
+      console.error('Error signing out:', err);
+    }
+  };
 
   const navItems = [
     { 
@@ -105,7 +113,9 @@ const Navigation: React.FC = () => {
         <button className={styles.proBtn}>LIFETIME PRO</button>
 
         {displayName && <span className={styles.username}>Hi, {displayName}</span>}
-        <UserButton />
+        <button className={styles.logoutBtn} onClick={handleSignOut}>
+          LOGOUT
+        </button>
       </div>
     </nav>
   );

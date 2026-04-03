@@ -10,7 +10,7 @@ interface WorklogModalProps {
 }
 
 const WorklogModal: React.FC<WorklogModalProps> = ({ onClose }) => {
-  const { logs, addLog, deleteLog } = useWorklog();
+  const { logs, loading, addLog, deleteLog } = useWorklog();
   const [activeCategory, setActiveCategory] = useState<string>('Work');
   const [description, setDescription] = useState<string>('');
 
@@ -30,7 +30,10 @@ const WorklogModal: React.FC<WorklogModalProps> = ({ onClose }) => {
     <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
-          <div className={styles.title}>ACTIVITY LOG</div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div className={styles.title}>ACTIVITY LOG</div>
+            {loading && <span className={styles.loaderSmall}>Syncing...</span>}
+          </div>
           <button className={styles.closeBtn} onClick={onClose}>×</button>
         </div>
 
@@ -40,6 +43,7 @@ const WorklogModal: React.FC<WorklogModalProps> = ({ onClose }) => {
               key={cat}
               className={`${styles.catChip} ${activeCategory === cat ? styles.active : ''}`}
               onClick={() => setActiveCategory(cat)}
+              disabled={loading}
             >
               {cat}
             </button>
@@ -50,12 +54,13 @@ const WorklogModal: React.FC<WorklogModalProps> = ({ onClose }) => {
           <input
             type="text"
             className={styles.textInput}
-            placeholder="Log activity..."
+            placeholder={loading ? "Waiting for sync..." : "Log activity..."}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            disabled={loading}
             autoFocus
           />
-          <button type="submit" className={styles.sendBtn} disabled={!description.trim()}>
+          <button type="submit" className={styles.sendBtn} disabled={loading || !description.trim()}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="22" y1="2" x2="11" y2="13" />
               <polygon points="22 2 15 22 11 13 2 9 22 2" />
@@ -64,8 +69,13 @@ const WorklogModal: React.FC<WorklogModalProps> = ({ onClose }) => {
         </form>
 
         <div className={styles.logsList}>
-          {currentDayLogs.length === 0 ? (
-            <div className={styles.emptyState}>No activities logged yet</div>
+          {loading && logs.length === 0 ? (
+            <div className={styles.loadingState}>
+              <div className={styles.pulse}></div>
+              <p>Loading activities...</p>
+            </div>
+          ) : currentDayLogs.length === 0 ? (
+            <div className={styles.emptyState}>No activities logged yet for today</div>
           ) : (
             currentDayLogs.map((log) => (
               <div key={log.id} className={styles.logItem}>

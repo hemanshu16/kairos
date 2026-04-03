@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { useUser } from '@clerk/react';
+import { useAuth } from './AuthContext';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { STORAGE_KEYS } from '../utils/storageKeys';
 
@@ -38,9 +38,9 @@ interface AppProviderProps {
 }
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-  // Clerk user data
-  const { user } = useUser();
-  const username = user?.firstName || user?.username || '';
+  // Supabase user data
+  const { user } = useAuth();
+  const username = user?.user_metadata?.full_name || user?.email?.split('@')[0] || '';
 
   // User preferences (still localStorage — these are app-specific, not auth)
   const [birthDate, setBirthDate] = useLocalStorage<string | null>(STORAGE_KEYS.BIRTHDATE, null);
