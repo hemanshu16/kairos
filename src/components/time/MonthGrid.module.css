@@ -1,0 +1,65 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  min-width: 160px;
+}
+
+.title {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--text-dim);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.cell.empty {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cell.past {
+  background: #926E2B;
+  border-color: #926E2B;
+}
+
+.cell.current {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 12px var(--gold-dim);
+}
+
+.dayNumber {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.cell.past .dayNumber {
+  color: var(--text-dim);
+}
+
+.cell.current .dayNumber {
+  color: var(--bg-night);
+  font-weight: 700;
+}

@@ -1,0 +1,54 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 6, 15, 0.85);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(12px);
+  animation: fadeIn 0.5s ease;
+}
+
+.box {
+  text-align: center;
+  padding: 40px;
+}
+
+.title {
+  font-family: 'Space Mono', monospace;
+  font-size: 24px;
+  color: var(--gold);
+  margin-bottom: 12px;
+  font-weight: normal;
+  letter-spacing: 4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 40px;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--border);
+  color: #fff;
+  font-size: 28px;
+  text-align: center;
+  outline: none;
+  padding: 10px;
+  width: 280px;
+  font-family: 'DM Sans', sans-serif;
+  transition: border-color 0.3s;
+}
+
+.input:focus {
+  border-color: var(--gold);
+}
+
+.input::placeholder {
+  color: var(--text-dim);
+  opacity: 0.5;
+}

@@ -1,0 +1,108 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  padding: 0 24px;
+  height: 60px;
+}
+
+.navLogoGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.navBrand {
+  font-family: 'Space Mono', monospace;
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--gold);
+  letter-spacing: 5px;
+  line-height: 1;
+}
+
+.navMeaning {
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-top: 6px;
+  line-height: 1;
+  transition: color 0.3s ease;
+  min-width: 250px;
+}
+
+.navLogoGroup:hover .navBrand {
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.navLogoGroup:hover .navMeaning {
+  color: var(--gold);
+}
+
+.navLinks {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  gap: 8px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.navTab {
+  flex: 1;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  transition: color 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.navIcon {
+  font-size: 20px;
+}
+
+.navLabel {
+  font-size: 10px;
+}
+
+.navTab.active {
+  color: var(--gold);
+}
+
+.navTab:hover {
+  color: var(--text);
+}
+
+.navActions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.username {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+  white-space: nowrap;
+}

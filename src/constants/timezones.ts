@@ -1,0 +1,63 @@
+// IANA timezone database organized by region
+export const TIMEZONES = {
+  "North America": [
+    "America/New_York",
+    "America/Chicago",
+    "America/Denver",
+    "America/Los_Angeles",
+    "America/Phoenix",
+    "America/Anchorage",
+    "America/Toronto",
+    "America/Vancouver",
+    "America/Mexico_City",
+  ],
+  "Europe": [
+    "Europe/London",
+    "Europe/Paris",
+    "Europe/Berlin",
+    "Europe/Rome",
+    "Europe/Madrid",
+    "Europe/Amsterdam",
+    "Europe/Brussels",
+    "Europe/Vienna",
+    "Europe/Stockholm",
+    "Europe/Moscow",
+  ],
+  "Asia": [
+    "Asia/Tokyo",
+    "Asia/Shanghai",
+    "Asia/Hong_Kong",
+    "Asia/Singapore",
+    "Asia/Seoul",
+    "Asia/Dubai",
+    "Asia/Kolkata",
+    "Asia/Bangkok",
+    "Asia/Jakarta",
+    "Asia/Manila",
+  ],
+  "Australia & Pacific": [
+    "Australia/Sydney",
+    "Australia/Melbourne",
+    "Australia/Brisbane",
+    "Australia/Perth",
+    "Pacific/Auckland",
+    "Pacific/Fiji",
+    "Pacific/Honolulu",
+  ],
+  "South America": [
+    "America/Sao_Paulo",
+    "America/Buenos_Aires",
+    "America/Santiago",
+    "America/Lima",
+    "America/Bogota",
+  ],
+  "Africa": [
+    "Africa/Cairo",
+    "Africa/Johannesburg",
+    "Africa/Lagos",
+    "Africa/Nairobi",
+    "Africa/Casablanca",
+  ],
+};
+
+export default TIMEZONES;

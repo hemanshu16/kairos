@@ -1,0 +1,115 @@
+.panel {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px;
+  background: rgba(17, 19, 26, 0.4);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.title {
+  font-family: 'Space Mono', monospace;
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  font-weight: bold;
+}
+
+.modes {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+
+.modeBtn {
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-dim);
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+}
+
+.modeBtn.active {
+  background: var(--gold-dim);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.circle {
+  width: 220px;
+  height: 220px;
+  margin: 30px auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle svg {
+  position: absolute;
+  inset: 0;
+}
+
+.timeDisplay {
+  font-family: 'Space Mono', monospace;
+  font-size: 48px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.controls {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btn.primary {
+  background: var(--gold);
+  color: #111;
+}
+
+.btn.secondary {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.label {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-top: 20px;
+  font-style: italic;
+}

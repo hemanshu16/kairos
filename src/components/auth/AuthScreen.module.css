@@ -1,0 +1,188 @@
+.authScreen {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #05060f 0%, #0a0e1a 30%, #111628 60%, #0a0e1a 100%);
+  overflow: hidden;
+}
+
+/* Background glows */
+.bgGlow {
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 166, 35, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  animation: floatGlow 8s ease-in-out infinite;
+}
+
+.bgGlow2 {
+  position: absolute;
+  bottom: -20%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(100, 140, 200, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  animation: floatGlow 10s ease-in-out infinite reverse;
+}
+
+@keyframes floatGlow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -20px) scale(1.1); }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 40px 20px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+}
+
+/* Branding */
+.branding {
+  text-align: center;
+}
+
+.logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 48px;
+  font-weight: 700;
+  color: #f5a623;
+  letter-spacing: 12px;
+  margin: 0 0 12px;
+  text-shadow: 0 0 40px rgba(245, 166, 35, 0.3);
+}
+
+.tagline {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  color: rgba(232, 224, 208, 0.7);
+  margin: 0 0 8px;
+  font-weight: 300;
+}
+
+.meaning {
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: rgba(232, 224, 208, 0.35);
+  margin: 0;
+}
+
+.meaning em {
+  font-style: italic;
+}
+
+/* Auth Card */
+.authCard {
+  width: 100%;
+  background: rgba(17, 19, 30, 0.85);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(245, 166, 35, 0.12);
+  border-radius: 20px;
+  padding: 32px 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Mode Toggle */
+.modeToggle {
+  display: flex;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.toggleBtn {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: transparent;
+  color: rgba(232, 224, 208, 0.4);
+}
+
+.toggleBtn.active {
+  background: linear-gradient(135deg, #f5a623, #e89500);
+  color: #111;
+  box-shadow: 0 4px 12px rgba(245, 166, 35, 0.25);
+}
+
+.toggleBtn:not(.active):hover {
+  color: rgba(232, 224, 208, 0.7);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Clerk wrapper */
+.clerkWrapper {
+  min-height: 200px;
+}
+
+/* Footer */
+.authFooter {
+  text-align: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.authFooter p {
+  font-size: 13px;
+  color: rgba(232, 224, 208, 0.4);
+  margin: 0;
+}
+
+.linkBtn {
+  background: none;
+  border: none;
+  color: #f5a623;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  padding: 0;
+}
+
+.linkBtn:hover {
+  color: #ffc857;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .container {
+    padding: 24px 16px;
+    gap: 28px;
+  }
+
+  .logo {
+    font-size: 36px;
+    letter-spacing: 8px;
+  }
+
+  .authCard {
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+}

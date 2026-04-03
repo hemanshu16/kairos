@@ -1,0 +1,159 @@
+.panel {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  background: rgba(17, 19, 26, 0.4);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-family: 'Space Mono', monospace;
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  font-weight: bold;
+}
+
+.inputRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.textInput {
+  flex: 1;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+}
+
+.textInput:focus {
+  border-color: var(--gold-dim);
+}
+
+.textInput::placeholder {
+  color: var(--text-dim);
+}
+
+.addBtn {
+  background: var(--gold);
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: opacity 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.addBtn:hover {
+  opacity: 0.85;
+}
+
+.habitList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.habitItem {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.habitTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.habitName {
+  font-size: 16px;
+  font-weight: bold;
+  flex: 1;
+}
+
+.habitStreak {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--gold);
+}
+
+.habitDel {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 24px;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.habitDel:hover {
+  color: #ff6b6b;
+}
+
+.habitWeek {
+  display: flex;
+  gap: 12px;
+}
+
+.habitDayDot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-dim);
+  transition: all 0.2s;
+  font-weight: 600;
+}
+
+.habitDayDot:hover {
+  border-color: var(--gold-dim);
+  background: var(--surface);
+}
+
+.habitDayDot.done {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #111;
+  font-weight: 700;
+}
+
+.habitDayDot.todayRing {
+  border-color: var(--gold);
+  border-width: 2px;
+}
+
+.emptyState {
+  text-align: center;
+  color: var(--text-dim);
+  padding: 40px;
+  font-size: 14px;
+}

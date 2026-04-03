@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/Admin/Hemanshu/Personal/Cloudflare/seeyourtime/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

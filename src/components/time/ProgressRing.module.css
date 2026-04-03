@@ -1,0 +1,76 @@
+.widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 16px 0;
+  flex: 0 1 auto;
+  min-width: 140px;
+}
+
+.ringWrap {
+  position: relative;
+  margin: 0;
+}
+
+.ringWrap svg {
+  overflow: visible;
+}
+
+.ringCenter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ringTime {
+  font-family: 'Space Mono', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0px;
+  line-height: 1.2;
+}
+
+.ringLabel {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-top: 2px;
+  text-transform: uppercase;
+  font-family: 'Space Mono', monospace;
+  font-weight: 600;
+}
+
+.marker {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--text-dim);
+}
+
+.hand {
+  transition: transform 0.1s linear;
+  filter: drop-shadow(0 0 2px var(--gold-dim));
+}
+
+.progressDot {
+  filter: drop-shadow(0 0 4px var(--gold));
+  transition: cx 0.1s linear, cy 0.1s linear;
+}
+
+@media (max-width: 380px) {
+  .ringWrap {
+    width: 120px !important;
+    height: 120px !important;
+  }
+
+  .ringTime {
+    font-size: 15px;
+  }
+}
