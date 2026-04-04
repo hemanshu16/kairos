@@ -4,15 +4,16 @@
   left: 0;
   width: 100%;
   max-width: none;
-  background: rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(245, 166, 35, 0.15);
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
-  padding: 0 24px;
-  height: 80px;
+  padding: 0 32px;
+  height: 72px;
 }
 
 .navLogoGroup {
@@ -25,11 +26,11 @@
 }
 
 .navBrand {
-  font-family: 'Space Mono', monospace;
-  font-size: 22px;
-  font-weight: bold;
+  font-family: var(--font-header);
+  font-size: 20px;
+  font-weight: 800;
   color: #f5a623;
-  letter-spacing: 5px;
+  letter-spacing: 3px;
   transition: all 0.3s;
   line-height: 1;
 }
@@ -37,9 +38,9 @@
 .navMeaning {
   font-family: 'Crimson Pro', serif;
   font-style: italic;
-  font-size: 14px;
-  color: rgba(232, 224, 208, 0.5);
-  margin-top: 6px;
+  font-size: 13px;
+  color: rgba(232, 224, 208, 0.4);
+  margin-top: 2px;
   transition: all 0.3s;
   white-space: nowrap;
   line-height: 1;
@@ -65,38 +66,58 @@
 
 .navTab {
   flex: 1;
-  padding: 12px 4px;
+  padding: 8px 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   cursor: pointer;
   border: none;
   background: none;
-  color: rgba(232, 224, 208, 0.5);
+  color: rgba(232, 224, 208, 0.45);
   font-size: 11px;
-  font-weight: bold;
-  letter-spacing: 2px;
-  transition: all 0.2s;
-  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  transition: all 0.25s ease-in-out;
+  font-family: var(--font-header);
+  position: relative;
+  border-radius: 10px;
 }
 
 .navTab svg {
   width: 26px;
   height: 26px;
-  transition: transform 0.2s;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), filter 0.25s;
 }
 
 .navTab:hover {
   color: #e8e0d0;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .navTab:hover svg {
   transform: translateY(-2px);
+  filter: drop-shadow(0 2px 6px rgba(245, 166, 35, 0.2));
 }
 
 .navTab.active {
   color: #f5a623;
+}
+
+.navTab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 25%;
+  width: 50%;
+  height: 2px;
+  background: #f5a623;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(245, 166, 35, 0.5);
+}
+
+.navTab.active svg {
+  filter: drop-shadow(0 0 6px rgba(245, 166, 35, 0.4));
 }
 
 .navActions {
@@ -112,8 +133,8 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 6px 12px;
-  font-size: 11px;
-  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-family: var(--font-header);
   color: #f5a623;
   cursor: pointer;
   display: flex;
@@ -127,23 +148,49 @@
 }
 
 .proBtn {
-  background: linear-gradient(135deg, #ffc857, #f5a623);
-  color: #111;
-  font-weight: bold;
+  background: linear-gradient(135deg, rgba(255, 200, 87, 0.1), rgba(245, 166, 35, 0.2));
+  color: #ffc857;
+  font-weight: 700;
   font-size: 11px;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
+  padding: 6px 14px;
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: 6px;
   cursor: pointer;
   text-transform: uppercase;
-  box-shadow: 0 4px 12px rgba(245, 166, 35, 0.3);
-  transition: transform 0.2s;
-  font-family: 'DM Sans', sans-serif;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: var(--font-header);
   white-space: nowrap;
 }
 
 .proBtn:hover {
-  transform: scale(1.05);
+  background: linear-gradient(135deg, #ffc857, #f5a623);
+  color: #111;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rga(245, 166, 35, 0.3);
+}
+
+.fullscreenBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f5a623;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.fullscreenBtn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.fullscreenBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(245, 166, 35, 0.4);
+  transform: scale(1.1);
 }
 
 .username {
@@ -154,13 +201,13 @@
 }
 
 .logoutBtn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(232, 224, 208, 0.6);
-  padding: 8px 12px;
-  border-radius: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(232, 224, 208, 0.4);
+  padding: 6px 10px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 11px;
+  font-size: 10px;
   font-family: 'Space Mono', monospace;
   font-weight: bold;
   transition: all 0.2s;

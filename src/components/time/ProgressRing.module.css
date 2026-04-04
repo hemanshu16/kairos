@@ -9,6 +9,17 @@
   min-width: 140px;
 }
 
+.cardTitle {
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--text-dim);
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.1);
+  font-family: var(--font-header);
+}
+
 .ringWrap {
   position: relative;
   display: flex;
@@ -29,8 +40,10 @@
 }
 
 .markerGroup text {
-  font-family: 'Space Mono', monospace;
-  letter-spacing: 0.5px;
+  font-family: var(--font-header);
+  font-weight: 800;
+  font-size: 13px;
+  fill: var(--text); /* Dark Slate for visibility */
   pointer-events: none;
 }
 
@@ -38,31 +51,32 @@
   margin: auto;
   pointer-events: none;
   z-index: 10;
-  background: rgba(17, 19, 26, 0.95);
-  width: 64px;
-  height: 64px;
+  background: var(--surface); /* Glassy background that adapts to sky */
+  backdrop-filter: blur(8px);
+  width: 76px; /* Increased from 64px for better text fit */
+  height: 76px;
   border-radius: 50%;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05), inset 0 0 10px rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .ringTime {
-  font-family: 'Space Mono', monospace;
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
+  font-family: var(--font-header);
+  font-size: 22px; /* Increased for prominence */
+  font-weight: 800;
+  color: var(--text); /* Matches main clock */
   letter-spacing: -0.5px;
   line-height: 1;
 }
 
 .ringLabel {
-  font-size: 8px;
+  font-size: 9px;
   letter-spacing: 2px;
-  color: rgba(232, 224, 208, 0.4);
+  color: var(--text-dim);
   margin-top: 2px;
   font-weight: 800;
   text-transform: uppercase;

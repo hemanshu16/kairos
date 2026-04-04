@@ -9,10 +9,12 @@ export interface Track {
 }
 
 export const TRACKS: Track[] = [
-  { name: 'Piano Ambient', mood: 'Calm', url: 'https://cdn.pixabay.com/audio/2022/11/22/audio_febc508520.mp3' },
-  { name: 'Lo-Fi Chill', mood: 'Focus', url: 'https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf5f5.mp3' },
-  { name: 'Deep Space', mood: 'Ambient', url: 'https://cdn.pixabay.com/audio/2022/01/18/audio_d0a13f69d2.mp3' },
-  { name: 'Study Vibes', mood: 'Study', url: 'https://cdn.pixabay.com/audio/2022/10/25/audio_17b6dc1a61.mp3' },
+  { name: 'Rain on Roof', mood: 'Nature / Focus', url: 'https://actions.google.com/sounds/v1/weather/rain_on_roof.ogg' },
+  { name: 'Ocean Waves', mood: 'White Noise', url: 'https://actions.google.com/sounds/v1/water/waves_crashing_on_rock_beach.ogg' },
+  { name: 'Beautiful Piano', mood: 'Calm / Study', url: 'https://github.com/rafaelcastrocouto/lofi/raw/master/tracks/3.mp3' },
+  { name: 'Lo-Fi Chill', mood: 'Coffee Shop', url: 'https://github.com/rafaelcastrocouto/lofi/raw/master/tracks/1.mp3' },
+  { name: 'Deep Space', mood: 'Ambient Focus', url: 'https://github.com/rafaelcastrocouto/lofi/raw/master/tracks/2.mp3' },
+  { name: 'Summer Night', mood: 'Calm / Nature', url: 'https://archive.org/download/NatureSoundsCrickets/crickets.mp3' },
 ];
 
 interface MusicSettings {

@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useApp } from '../contexts/AppContext';
+import { getZonedTime } from '../utils/timeUtils';
 import {
   getHourProgress,
   getDayProgress,
@@ -30,15 +32,21 @@ export interface TimeData {
  * Updates every second
  */
 export const useTime = (birthDate: string | Date | null = null, lifeExpectancy = 80): TimeData => {
-  const [now, setNow] = useState(new Date());
+  const { timezone } = useApp();
+
+  const getZonedNow = useCallback(() => {
+    return getZonedTime(timezone);
+  }, [timezone]);
+
+  const [now, setNow] = useState(getZonedNow());
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setNow(new Date());
+      setNow(getZonedNow());
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [getZonedNow]);
 
   return {
     now,

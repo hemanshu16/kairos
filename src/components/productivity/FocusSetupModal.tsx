@@ -76,7 +76,20 @@ const FocusSetupModal: React.FC<FocusSetupModalProps> = ({ onClose, onStart }) =
           min
         </div>
 
-        <div className={styles.sectionTitle}>SESSION DURATION (MIN)</div>
+        <div className={styles.sectionTitle}>POMODORO PRESETS</div>
+        <div className={styles.presetRow}>
+          <button className={styles.presetBtn} onClick={() => onStart(25, promptMinutes, task || 'Pomodoro Session')}>
+            POMODORO (25m)
+          </button>
+          <button className={styles.presetBtn} onClick={() => onStart(50, promptMinutes, task || 'Deep Work')}>
+            DEEP WORK (50m)
+          </button>
+          <button className={styles.presetBtn} onClick={() => onStart(90, promptMinutes, task || 'Extreme Flow')}>
+            EXTREME FLOW (90m)
+          </button>
+        </div>
+
+        <div className={styles.sectionTitle}>OR CUSTOM DURATION</div>
 
         <div className={styles.customActionRow}>
           <input 

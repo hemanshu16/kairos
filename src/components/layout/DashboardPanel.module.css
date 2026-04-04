@@ -2,7 +2,7 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0px 40px 120px;
+  padding: 0px 40px 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,27 +11,30 @@
 
 .clockSection {
   text-align: center;
-  margin-top: 5vh;
-  margin-bottom: 4vh;
+  margin-top: 3vh; /* Pulled up */
+  margin-bottom: 5px; 
   z-index: 10;
   position: relative;
   cursor: pointer;
 }
 
 .digitalClock {
-  font-family: 'Space Mono', monospace;
-  font-size: 46px;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 2px;
-  line-height: 1.2;
+  font-family: var(--font-header);
+  font-size: 54px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: 1px;
+  line-height: 1;
+  text-shadow: 0 1px 15px rgba(0, 0, 0, 0.1);
 }
 
 .dateStr {
-  font-size: 14px;
-  color: rgba(232, 224, 208, 0.4);
-  margin-top: 4px;
+  font-size: 17px;
+  color: var(--text-dim);
+  margin-top: 8px;
   font-weight: 500;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+  font-family: var(--font-header);
 }
 
 .greetingContainer {
@@ -42,30 +45,35 @@
 }
 
 .greetingText {
-  font-size: 42px;
-  color: #fff;
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  font-size: 52px;
+  color: var(--text-dim);
   font-weight: 300;
-  font-family: 'DM Sans', sans-serif;
-  letter-spacing: -0.5px;
+  text-align: center;
   margin: 0;
+  text-shadow: 0 1px 15px rgba(0, 0, 0, 0.1);
 }
 
 .greetingText.quote {
   font-family: 'Crimson Pro', serif;
   font-style: italic;
-  font-size: 32px;
-  color: rgba(232, 224, 208, 0.8);
+  font-size: 52px;
+  color: var(--text-dim);
+  text-shadow: 0 1px 15px rgba(0, 0, 0, 0.1);
 }
+
+/* Goal UI styles removed */
 
 .dashboardGrid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 80px;
-  padding: 10px 0;
+  gap: 60px;
+  padding-bottom: 80px; /* Increased bottom padding */
   align-items: flex-start;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 12vh; /* Moved significantly down from 2vh */
 }
 
 @media (max-width: 1100px) {
@@ -91,6 +99,12 @@
   }
   .greetingText.quote {
     font-size: 24px;
+  }
+  .goalInput {
+    font-size: 20px;
+  }
+  .goalPrompt {
+    font-size: 16px;
   }
 }
 

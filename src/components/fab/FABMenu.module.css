@@ -1,6 +1,6 @@
 .fabArea {
   position: fixed;
-  bottom: 85px; /* Above the stats strip */
+  bottom: 110px;
   left: 0;
   width: 100%;
   display: flex;
@@ -11,16 +11,20 @@
 
 .fabGroup {
   display: flex;
-  gap: 16px;
+  gap: 6px;
   pointer-events: auto;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  padding: 10px 16px;
 }
 
 .fabBtn {
-  background: rgba(31, 34, 49, 0.6);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  width: 72px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  width: 80px;
   height: 72px;
   display: flex;
   flex-direction: column;
@@ -28,41 +32,53 @@
   justify-content: center;
   gap: 6px;
   cursor: pointer;
-  transition: all 0.2s;
-  color: rgba(232, 224, 208, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: rgba(232, 224, 208, 0.7);
   padding: 0;
 }
 
 .fabBtn:hover {
-  background: rgba(42, 45, 61, 0.8);
+  background: rgba(245, 166, 35, 0.1);
   color: #f5a623;
-  transform: translateY(-5px);
-  border-color: rgba(245, 166, 35, 0.3);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+  border-color: rgba(245, 166, 35, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .fabBtn svg {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
+  stroke-width: 1.6;
 }
 
 .fabBtn span {
-  font-size: 9px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
+  font-family: var(--font-header);
 }
 
 @media (max-width: 768px) {
   .fabArea {
-    bottom: 80px;
+    bottom: 75px;
+  }
+  .fabGroup {
+    gap: 4px;
+    padding: 6px 10px;
+    border-radius: 16px;
   }
   .fabBtn {
-    width: 60px;
-    height: 60px;
+    width: 58px;
+    height: 54px;
+    border-radius: 12px;
+  }
+  .fabBtn svg {
+    width: 20px;
+    height: 20px;
   }
   .fabBtn span {
-    font-size: 7px;
+    font-size: 7.5px;
   }
 }
 

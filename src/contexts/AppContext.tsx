@@ -40,7 +40,8 @@ interface AppProviderProps {
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   // Supabase user data
   const { user } = useAuth();
-  const username = user?.user_metadata?.full_name || user?.email?.split('@')[0] || '';
+  const localUsername = localStorage.getItem('kairos_username') || '';
+  const username = user?.user_metadata?.full_name || user?.email?.split('@')[0] || localUsername;
 
   // User preferences (still localStorage — these are app-specific, not auth)
   const [birthDate, setBirthDate] = useLocalStorage<string | null>(STORAGE_KEYS.BIRTHDATE, null);

@@ -5,36 +5,43 @@ import DashboardPanel from './DashboardPanel';
 import TodoPanel from '../productivity/TodoPanel';
 import HabitPanel from '../productivity/HabitPanel';
 import NotesPanel from '../productivity/NotesPanel';
-import WorklogModal from '../productivity/WorklogModal';
 import FocusSetupModal from '../productivity/FocusSetupModal';
 import FocusProgressModal from '../productivity/FocusProgressModal';
 import Starfield from '../effects/Starfield';
 import SunMoonOrb from '../effects/SunMoonOrb';
+import Clouds from '../effects/Clouds';
 import FABMenu from '../fab/FABMenu';
 import StatsStrip from './StatsStrip';
 import NotifyModal from '../productivity/NotifyModal';
-import MusicModal from '../productivity/MusicModal';
+import MusicianModal from '../productivity/MusicModal';
+import QuotesModal from '../productivity/QuotesModal';
+import ThemesModal from '../productivity/ThemesModal';
+import GlobalReminderPopup from '../productivity/GlobalReminderPopup';
 import { getTheme, applyTheme, getTimeDecimal } from '../../utils/skyTheme';
+import { getZonedTime } from '../../utils/timeUtils';
 import { useFocusManager } from '../../hooks/useFocusManager';
 import styles from './Dashboard.module.css';
 
 const Dashboard: React.FC = () => {
-  const { activePanel, setActivePanel } = useApp();
-  const { startSession, isRunning, timeLeft, session, stopSession } = useFocusManager();
+  const { activePanel, setActivePanel, timezone, customBg } = useApp();
+  const { startSession, isRunning, timeLeft, session, stopSession, isBreak, breakTimeLeft, startBreak, endBreak } = useFocusManager();
+  const [timeFloat, setTimeFloat] = React.useState(() => getTimeDecimal(getZonedTime(timezone)));
 
   // Dynamic sky gradient effect
   useEffect(() => {
     const updateTheme = () => {
-      const timeFloat = getTimeDecimal();
-      const theme = getTheme(timeFloat);
-      const customBg = localStorage.getItem('tc-custom-bg');
+      const currentZonedTime = getZonedTime(timezone);
+      const newTimeFloat = getTimeDecimal(currentZonedTime);
+      setTimeFloat(newTimeFloat);
+      
+      const theme = getTheme(newTimeFloat);
       applyTheme(theme, customBg);
     };
 
     updateTheme();
     const interval = setInterval(updateTheme, 1000); // Check once per second
     return () => clearInterval(interval);
-  }, []);
+  }, [timezone, customBg]);
 
   const renderPanel = () => {
     switch (activePanel) {
@@ -46,7 +53,6 @@ const Dashboard: React.FC = () => {
         return <HabitPanel />;
       case 'notes':
         return <NotesPanel />;
-      case 'worklog':
       case 'focus':
       default:
         return <DashboardPanel />;
@@ -55,21 +61,23 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className={styles.dashboard}>
-      <Starfield />
-      <SunMoonOrb />
+      <Starfield timeFloat={timeFloat} />
+      <Clouds timeFloat={timeFloat} />
+      <SunMoonOrb timeFloat={timeFloat} />
       <Navigation />
       <main className={styles.main}>{renderPanel()}</main>
       
       {/* Modals */}
-      {activePanel === 'worklog' && (
-        <WorklogModal onClose={() => setActivePanel('dashboard')} />
-      )}
       
       {activePanel === 'focus' && (
         isRunning ? (
           <FocusProgressModal 
             task={session?.task || ''} 
             timeLeft={timeLeft} 
+            isBreak={isBreak}
+            breakTimeLeft={breakTimeLeft}
+            onStartBreak={(mins: number) => startBreak(mins)}
+            onEndBreak={endBreak}
             onClose={() => setActivePanel('dashboard')} 
             onStop={() => {
               stopSession();
@@ -81,7 +89,7 @@ const Dashboard: React.FC = () => {
             onClose={() => setActivePanel('dashboard')} 
             onStart={(dur, prompt, task) => {
                startSession(dur, prompt, task);
-               setActivePanel('dashboard');
+               // Timer will immediately render because activePanel remains 'focus' and isRunning becomes true
             }} 
           />
         )
@@ -92,9 +100,18 @@ const Dashboard: React.FC = () => {
       )}
 
       {activePanel === 'music' && (
-        <MusicModal onClose={() => setActivePanel('dashboard')} />
+        <MusicianModal onClose={() => setActivePanel('dashboard')} />
       )}
 
+      {activePanel === 'quotes' && (
+        <QuotesModal onClose={() => setActivePanel('dashboard')} />
+      )}
+
+      {activePanel === 'themes' && (
+        <ThemesModal onClose={() => setActivePanel('dashboard')} />
+      )}
+
+      <GlobalReminderPopup />
       <FABMenu />
       <StatsStrip />
     </div>

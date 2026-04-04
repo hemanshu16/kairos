@@ -22,8 +22,11 @@ const TodoPanel: React.FC = () => {
   return (
     <div className={styles.panel}>
       <div className={styles.header}>
-        <div className={styles.title}>YOUR TODOS</div>
-        {loading && <div className={styles.loaderSmall}>Syncing...</div>}
+        <div className={styles.labelGroup}>
+          <div className={styles.preTitle}>ZENITH • TASK MASTER</div>
+          <div className={styles.title}>Your Todos</div>
+        </div>
+        {/* {loading && <div className={styles.loaderSmall}>Syncing...</div>} */}
       </div>
 
       {/* Categories */}

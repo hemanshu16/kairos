@@ -1,122 +1,157 @@
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(12px);
+  background: rgba(8, 8, 12, 0.98);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
   z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
 }
 
 .modalContent {
   width: 100%;
-  max-width: 440px;
-  background: rgba(26, 28, 46, 0.98);
-  border: 1px solid rgba(248, 175, 60, 0.1);
-  border-radius: 24px;
-  padding: 40px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
+  justify-content: center;
   text-align: center;
+  padding: 40px;
+  animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .header {
-  width: 100%;
+  position: absolute;
+  top: 40px;
+  width: calc(100% - 80px);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
 }
 
 .title {
   font-family: 'Space Mono', monospace;
-  font-size: 13px;
-  letter-spacing: 4px;
-  color: rgba(248, 175, 60, 0.6);
+  font-size: 16px;
+  letter-spacing: 8px;
+  color: #f5a623;
   font-weight: 800;
 }
 
 .closeBtn {
   background: none;
   border: none;
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 24px;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 40px;
   cursor: pointer;
+  transition: all 0.2s;
+  line-height: 1;
+}
+
+.closeBtn:hover {
+  color: rgba(255, 255, 255, 0.9);
+  transform: scale(1.1);
 }
 
 .taskName {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 24px;
+  font-family: var(--font-header, 'DM Sans', sans-serif);
+  font-size: 40px;
   font-weight: 800;
-  color: #fff;
-  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 24px;
   letter-spacing: -0.5px;
 }
 
 .timerDisplay {
   font-family: 'Space Mono', monospace;
-  font-size: 84px;
+  font-size: 22vw;
   font-weight: 800;
-  color: #F8AF3C;
+  color: #f5a623;
   line-height: 1;
-  text-shadow: 0 0 40px rgba(248, 175, 60, 0.3);
-  margin: 16px 0;
+  text-shadow: 0 0 100px rgba(245, 166, 35, 0.25);
+  margin: 0;
+  letter-spacing: -8px;
 }
 
 .statusLabel {
   font-family: 'Space Mono', monospace;
-  font-size: 14px;
-  letter-spacing: 6px;
+  font-size: 18px;
+  letter-spacing: 16px;
   color: rgba(255, 255, 255, 0.3);
-  margin-bottom: 48px;
+  margin-top: 20px;
+  margin-bottom: 80px;
+  padding-left: 16px; /* offset the letter spacing */
 }
 
 .actions {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  flex-direction: row;
+  gap: 24px;
   width: 100%;
-  max-width: 280px;
+  max-width: 600px;
+  justify-content: center;
 }
 
 .keepWorkingBtn {
-  background: #F8AF3C;
+  background: #f5a623;
   color: #111;
   border: none;
-  border-radius: 16px;
-  padding: 18px;
+  border-radius: 20px;
+  padding: 24px 48px;
   font-size: 16px;
   font-weight: 800;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  transition: all 0.2s;
+  font-family: var(--font-header, 'DM Sans', sans-serif);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 1px;
 }
 
 .keepWorkingBtn:hover {
-  background: #ffc24d;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(248, 175, 60, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(245, 166, 35, 0.3);
+  background: #ffb84d;
 }
 
 .stopBtn {
-  background: none;
-  border: 1px solid rgba(255, 120, 120, 0.2);
-  color: rgba(255, 120, 120, 0.6);
-  border-radius: 16px;
-  padding: 16px;
-  font-size: 14px;
+  background: rgba(255, 82, 82, 0.05);
+  border: 1px solid rgba(255, 82, 82, 0.2);
+  color: rgba(255, 82, 82, 0.8);
+  border-radius: 20px;
+  padding: 24px 48px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  transition: all 0.2s;
+  font-family: var(--font-header, 'DM Sans', sans-serif);
+  transition: all 0.3s;
 }
 
 .stopBtn:hover {
-  background: rgba(255, 120, 120, 0.1);
-  color: rgba(255, 120, 120, 1);
-  border-color: rgba(255, 120, 120, 0.4);
+  background: rgba(255, 82, 82, 0.15);
+  color: #ff5252;
+  border-color: rgba(255, 82, 82, 0.5);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .timerDisplay {
+    font-size: 28vw;
+    letter-spacing: -4px;
+  }
+  .taskName {
+    font-size: 28px;
+  }
+  .actions {
+    flex-direction: column;
+    padding: 0 20px;
+  }
+  .keepWorkingBtn, .stopBtn {
+    width: 100%;
+    padding: 20px;
+  }
 }

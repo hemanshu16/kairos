@@ -1,9 +1,23 @@
-import React, { useEffect, useRef } from 'react';
-import { getTheme, getTimeDecimal } from '../../utils/skyTheme';
+import React, { useEffect, useRef, useMemo } from 'react';
+import { getTheme } from '../../utils/skyTheme';
 import styles from './Starfield.module.css';
 
-const Starfield: React.FC = () => {
+interface StarfieldProps {
+  timeFloat: number;
+}
+
+const Starfield: React.FC<StarfieldProps> = ({ timeFloat }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Persist star positions so they don't jump every second
+  const starData = useMemo(() => {
+    // Using a fixed size for calculation, will scale to canvas
+    return Array.from({ length: 180 }, () => ({
+      x: Math.random(), // 0 to 1
+      y: Math.random(), // 0 to 1
+      radius: Math.random() * 1.2 + 0.3,
+    }));
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -15,47 +29,29 @@ const Starfield: React.FC = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Create 180 stars with individual properties
-    const stars = Array.from({ length: 180 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      radius: Math.random() * 1.2 + 0.3, // 0.3 to 1.5 radius
-      phase: Math.random() * Math.PI * 2, // Random starting phase for twinkle
-      speed: Math.random() * 0.5 + 0.3, // Individual twinkle speed
-    }));
-
-    let animationId: number;
-    let frame = 0;
-
-    const animate = () => {
+    const drawStars = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Get current time for star opacity based on time of day
-      const timeFloat = getTimeDecimal();
+      // Get current theme based on provided timeFloat
       const theme = getTheme(timeFloat);
       const globalStarOpacity = theme.stars; // 0-1 based on time of day
 
-      stars.forEach((star) => {
-        // Sine wave twinkling effect
-        const twinkle = Math.sin(star.phase + frame * 0.02 * star.speed);
-        const starOpacity = ((twinkle + 1) / 2) * 0.7 + 0.3; // Range: 0.3 to 1.0
+      if (globalStarOpacity <= 0) return;
 
-        // Combine with global opacity (stars fade during day)
-        const finalOpacity = starOpacity * globalStarOpacity;
+      starData.forEach((star: { x: number, y: number, radius: number }) => {
+        const finalOpacity = 0.8 * globalStarOpacity;
 
         if (finalOpacity > 0.01) {
           ctx.beginPath();
-          ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+          // Scale normalized coordinates to current window size
+          ctx.arc(star.x * canvas.width, star.y * canvas.height, star.radius, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(255, 255, 255, ${finalOpacity})`;
           ctx.fill();
         }
       });
-
-      frame++;
-      animationId = requestAnimationFrame(animate);
     };
 
-    animate();
+    drawStars();
 
     const handleResize = () => {
       canvas.width = window.innerWidth;
@@ -65,10 +61,9 @@ const Starfield: React.FC = () => {
     window.addEventListener('resize', handleResize);
 
     return () => {
-      cancelAnimationFrame(animationId);
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [timeFloat]);
 
   return <canvas ref={canvasRef} className={styles.canvas} />;
 };

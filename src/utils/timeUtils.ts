@@ -11,6 +11,16 @@ export interface ProgressResult {
   yearsLeft?: string;
 }
 
+export const getZonedTime = (timezone?: string | null): Date => {
+  const d = new Date();
+  if (!timezone || timezone === 'local') return d;
+  try {
+    return new Date(d.toLocaleString('en-US', { timeZone: timezone }));
+  } catch (e) {
+    return d;
+  }
+};
+
 /**
  * Get progress percentage for a time period
  * @param {Date} now - Current date

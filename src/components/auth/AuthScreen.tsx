@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './AuthScreen.module.css';
 
-const AuthScreen: React.FC = () => {
+interface AuthScreenProps {
+}
+
+const AuthScreen: React.FC<AuthScreenProps> = () => {
   const [mode, setMode] = useState<'signIn' | 'signUp'>('signIn');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -52,14 +55,6 @@ const AuthScreen: React.FC = () => {
       <div className={styles.bgGlow2} />
 
       <div className={styles.container}>
-        <div className={styles.branding}>
-          <h1 className={styles.logo}>KAIROS</h1>
-          <p className={styles.tagline}>See your life passing, beautifully.</p>
-          <p className={styles.meaning}>
-            /ˈkīräs/ — <em>the precise, critical, or opportune moment</em>
-          </p>
-        </div>
-
         <div className={styles.authCard}>
           <div className={styles.modeToggle}>
             <button

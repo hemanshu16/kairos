@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useBell } from '../../hooks/useBell';
+import { ReminderType, SoundType } from '../../contexts/BellContext';
 import styles from './NotifyModal.module.css';
 
 interface NotifyModalProps {
@@ -7,29 +8,42 @@ interface NotifyModalProps {
 }
 
 const NotifyModal: React.FC<NotifyModalProps> = ({ onClose }) => {
-  const { settings, updateSettings, playSound } = useBell();
-  const [customInterval, setCustomInterval] = useState(settings.intervalMinutes.toString());
+  const { settings, addReminder, updateReminder, deleteReminder, playSound } = useBell();
+  const [view, setView] = useState<'list' | 'add'>('list');
 
-  const intervals = [
-    { label: '5m', value: 5 },
-    { label: '15m', value: 15 },
-    { label: '30m', value: 30 },
-    { label: '1h', value: 60 },
-    { label: '2h', value: 120 },
-  ];
+  // Form State
+  const [title, setTitle] = useState('');
+  const [message, setMessage] = useState('');
+  const [type, setType] = useState<ReminderType>('interval');
+  const [intervalMins, setIntervalMins] = useState(60);
+  const [timeStr, setTimeStr] = useState('12:00');
+  const [soundType, setSoundType] = useState<SoundType>('chime');
 
-  const handleIntervalClick = (val: number) => {
-    updateSettings({ intervalMinutes: val });
-    setCustomInterval(val.toString());
+  const handleAdd = () => {
+    if (!title.trim()) {
+      alert("Please provide a title for this reminder.");
+      return;
+    }
+    addReminder({
+      title,
+      message,
+      type,
+      intervalMinutes: type === 'interval' ? intervalMins : undefined,
+      timeOfDay: type === 'time' ? timeStr : undefined,
+      soundType,
+      enabled: true
+    });
+    setView('list');
+    resetForm();
   };
 
-  const handleCustomChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    setCustomInterval(val);
-    const num = parseInt(val);
-    if (!isNaN(num) && num > 0) {
-      updateSettings({ intervalMinutes: num });
-    }
+  const resetForm = () => {
+    setTitle('');
+    setMessage('');
+    setType('interval');
+    setIntervalMins(60);
+    setTimeStr('12:00');
+    setSoundType('chime');
   };
 
   return (
@@ -41,98 +55,150 @@ const NotifyModal: React.FC<NotifyModalProps> = ({ onClose }) => {
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
               <path d="M13.73 21a2 2 0 0 1-3.46 0" />
             </svg>
-            BELL SETTINGS
+            {view === 'list' ? 'REMINDERS' : 'NEW REMINDER'}
           </div>
           <button className={styles.closeBtn} onClick={onClose}>×</button>
         </div>
 
-        <div className={styles.section}>
-          <div className={styles.row}>
-            <span>Enable bell</span>
-            <label className={styles.switch}>
-              <input 
-                type="checkbox" 
-                checked={settings.enabled} 
-                onChange={(e) => updateSettings({ enabled: e.target.checked })}
-              />
-              <span className={styles.slider}></span>
-            </label>
-          </div>
-        </div>
-
-        <div className={styles.section}>
-          <label className={styles.label}>Interval</label>
-          <div className={styles.intervalGrid}>
-            {intervals.map((btn) => (
-              <button
-                key={btn.value}
-                className={`${styles.pillBtn} ${settings.intervalMinutes === btn.value ? styles.active : ''}`}
-                onClick={() => handleIntervalClick(btn.value)}
-              >
-                {btn.label}
-              </button>
+        {view === 'list' && (
+          <div className={styles.listContainer}>
+            {settings.reminders && settings.reminders.length === 0 && (
+              <div className={styles.emptyState}>No reminders active.</div>
+            )}
+            {settings.reminders && settings.reminders.map(r => (
+              <div key={r.id} className={`${styles.reminderCard} ${!r.enabled ? styles.disabled : ''}`}>
+                <div className={styles.reminderInfo}>
+                  <div className={styles.reminderTitle}>{r.title}</div>
+                  <div className={styles.reminderMeta}>
+                    {r.type === 'interval' ? `Every ${r.intervalMinutes}m` : `At ${r.timeOfDay}`} • {r.soundType}
+                  </div>
+                </div>
+                <div className={styles.reminderActions}>
+                  <label className={styles.switch}>
+                    <input 
+                      type="checkbox" 
+                      checked={r.enabled} 
+                      onChange={(e) => updateReminder(r.id, { enabled: e.target.checked })}
+                    />
+                    <span className={styles.slider}></span>
+                  </label>
+                  <button className={styles.deleteBtn} onClick={() => deleteReminder(r.id)}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              </div>
             ))}
-          </div>
-          <div className={styles.customRow}>
-            <span>Custom:</span>
-            <input 
-              type="number" 
-              className={styles.input} 
-              value={customInterval} 
-              onChange={handleCustomChange}
-            />
-            <span>min</span>
-          </div>
-        </div>
-
-        <div className={styles.section}>
-          <label className={styles.label}>Sound</label>
-          <div className={styles.selectWrapper}>
-            <select 
-              className={styles.select}
-              value={settings.soundType}
-              onChange={(e) => updateSettings({ soundType: e.target.value as any })}
-            >
-              <option value="chime">chime</option>
-              <option value="bell">bell</option>
-              <option value="ding">ding</option>
-            </select>
-          </div>
-        </div>
-
-        <div className={styles.section}>
-          <div className={styles.volumeHeader}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={styles.volumeIcon}>
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-            </svg>
-            <span>Volume</span>
-            <button className={styles.testBtn} onClick={playSound}>
-              TEST <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /></svg>
+            
+            <button className={styles.addBtn} onClick={() => setView('add')}>
+              + CREATE REMINDER
             </button>
           </div>
-          <input 
-            type="range" 
-            className={styles.range} 
-            value={settings.volume} 
-            onChange={(e) => updateSettings({ volume: parseInt(e.target.value) })}
-          />
-        </div>
+        )}
 
-        <div className={styles.section}>
-          <div className={styles.row}>
-            <span>Prompt activity log</span>
-            <label className={styles.switch}>
-              <input 
-                type="checkbox" 
-                checked={settings.promptActivity} 
-                onChange={(e) => updateSettings({ promptActivity: e.target.checked })}
-              />
-              <span className={styles.slider}></span>
-            </label>
+        {view === 'add' && (
+          <div className={styles.formContainer}>
+            <label className={styles.label}>Title</label>
+            <input 
+              type="text" 
+              className={styles.input} 
+              placeholder="e.g. Drink Water"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+
+            <label className={styles.label}>Message (Optional)</label>
+            <input 
+              type="text" 
+              className={styles.input} 
+              placeholder="Stay hydrated!"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+
+            <div className={styles.splitRow}>
+              <div className={styles.halfCol}>
+                <label className={styles.label}>Trigger Type</label>
+                <div className={styles.tabGroup}>
+                  <button 
+                    className={`${styles.tabBtn} ${type === 'interval' ? styles.activeTab : ''}`}
+                    onClick={() => setType('interval')}
+                  >Interval</button>
+                  <button 
+                    className={`${styles.tabBtn} ${type === 'time' ? styles.activeTab : ''}`}
+                    onClick={() => setType('time')}
+                  >Time</button>
+                </div>
+              </div>
+
+              <div className={styles.halfCol}>
+                {type === 'interval' ? (
+                  <div className={styles.intervalField}>
+                    <label className={styles.label}>Repeat Every</label>
+                    <div className={styles.inputWithUnit}>
+                      <input 
+                        type="number" 
+                        className={styles.input} 
+                        value={intervalMins}
+                        onChange={(e) => setIntervalMins(parseInt(e.target.value) || 1)}
+                        min={1}
+                      />
+                      <span>MINS</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className={styles.timeField}>
+                    <label className={styles.label}>Trigger At</label>
+                    <div className={styles.timeInputWrapper}>
+                      <input 
+                        type="time" 
+                        className={styles.input} 
+                        value={timeStr}
+                        onChange={(e) => setTimeStr(e.target.value)}
+                      />
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={styles.clockIcon}>
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                      </svg>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className={styles.splitRow}>
+               <div className={styles.halfCol}>
+                 <div className={styles.selectWrapper}>
+                  <select 
+                    className={styles.select}
+                    value={soundType}
+                    onChange={(e) => setSoundType(e.target.value as SoundType)}
+                  >
+                    <option value="chime">Chime</option>
+                    <option value="bell">Soft Bell</option>
+                    <option value="ding">Quick Ding</option>
+                    <option value="gong">Gong</option>
+                    <option value="digital">Digital Pulse</option>
+                  </select>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={styles.selectArrow}>
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                 </div>
+               </div>
+               <div className={styles.halfCol}>
+                 <label className={styles.label}>Preview</label>
+                 <button className={styles.testBtn} onClick={() => playSound(soundType)}>
+                   PLAY <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                 </button>
+               </div>
+            </div>
+
+            <div className={styles.formActions}>
+              <button className={styles.cancelBtn} onClick={() => { setView('list'); resetForm(); }}>Cancel</button>
+              <button className={styles.saveBtn} onClick={handleAdd}>Save Reminder</button>
+            </div>
           </div>
-        </div>
+        )}
+
       </div>
     </div>
   );
