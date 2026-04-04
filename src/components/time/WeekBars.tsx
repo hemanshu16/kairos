@@ -8,7 +8,7 @@ interface WeekBarsProps {
 
 const WeekBars: React.FC<WeekBarsProps> = ({ timeData }) => {
   const weekDays = useMemo(() => {
-    const now = new Date();
+    const now = timeData.now;
     const dayOfWeek = now.getDay(); // 0 = Sunday
     const mondayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Convert to Monday = 0
     const names = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
@@ -25,7 +25,7 @@ const WeekBars: React.FC<WeekBarsProps> = ({ timeData }) => {
         isCurrent
       };
     });
-  }, [timeData.day.percentage]);
+  }, [timeData.day.percentage, timeData.now]);
 
   return (
     <div className={styles.cleanWidget}>
@@ -44,10 +44,6 @@ const WeekBars: React.FC<WeekBarsProps> = ({ timeData }) => {
         ))}
       </div>
 
-      <div className={styles.pct}>
-        {timeData.week.percentage.toFixed(2)}
-        <span className={styles.pctSmall}>%</span>
-      </div>
     </div>
   );
 };

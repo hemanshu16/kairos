@@ -8,8 +8,10 @@ interface FocusSession {
 
 export const useFocusManager = () => {
   const [session, setSession] = useState<FocusSession | null>(null);
-  const [timeLeft, setTimeLeft] = useState<number>(0); // in seconds
+  const [timeLeft, setTimeLeft] = useState<number>(0); 
   const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [isBreak, setIsBreak] = useState<boolean>(false);
+  const [breakTimeLeft, setBreakTimeLeft] = useState<number>(0);
   
   const timerRef = useRef<number | null>(null);
   const lastPromptTimeRef = useRef<number>(0);
@@ -48,9 +50,24 @@ export const useFocusManager = () => {
 
   const stopSession = () => {
     setIsRunning(false);
+    setIsBreak(false);
     setSession(null);
     setTimeLeft(0);
+    setBreakTimeLeft(0);
     if (timerRef.current) clearInterval(timerRef.current);
+  };
+
+  const startBreak = (durationMinutes: number) => {
+    if (!isRunning) return;
+    setIsBreak(true);
+    setBreakTimeLeft(durationMinutes * 60);
+    sendNotification("Break Started", `Take a quick ${durationMinutes}m breather!`);
+  };
+
+  const endBreak = () => {
+    setIsBreak(false);
+    setBreakTimeLeft(0);
+    sendNotification("Break Ended", "Time to get back to work! Your timer is resuming.");
   };
 
   // Timer loop
@@ -58,11 +75,20 @@ export const useFocusManager = () => {
     if (!isRunning || !session) return;
 
     timerRef.current = window.setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev % 10 === 0) {
-          console.log(`Focus Timer: ${prev}s remaining...`);
-        }
+      // If we are currently in an active break
+      if (isBreak) {
+        setBreakTimeLeft((prev) => {
+          if (prev <= 1) {
+            endBreak(); // resume normal session immediately
+            return 0;
+          }
+          return prev - 1;
+        });
+        return; // Don't tick down the focus timer
+      }
 
+      // Normal focus timer tick
+      setTimeLeft((prev) => {
         if (prev <= 1) {
           // Timer finished!
           sendNotification(
@@ -103,8 +129,12 @@ export const useFocusManager = () => {
     session,
     timeLeft,
     isRunning,
+    isBreak,
+    breakTimeLeft,
     startSession,
-    stopSession
+    stopSession,
+    startBreak,
+    endBreak
   };
 };
 

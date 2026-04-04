@@ -18,8 +18,11 @@ const HabitPanel: React.FC = () => {
   return (
     <div className={styles.panel}>
       <div className={styles.header}>
-        <div className={styles.title}>YOUR HABITS</div>
-        {loading && <div className={styles.loaderSmall}>Syncing...</div>}
+        <div className={styles.labelGroup}>
+          <div className={styles.preTitle}>ZENITH • RITUALS</div>
+          <div className={styles.title}>Your Habits</div>
+        </div>
+        {/* {loading && <div className={styles.loaderSmall}>Syncing...</div>} */}
       </div>
 
       {/* Input */}
@@ -51,14 +54,17 @@ const HabitPanel: React.FC = () => {
             <div key={habit.id} className={styles.habitItem}>
               <div className={styles.habitTop}>
                 <div className={styles.habitName}>{habit.name}</div>
-                <div className={styles.habitStreak}>🔥 {getStreak(habit)} day streak</div>
-                <button className={styles.habitDel} onClick={() => deleteHabit(habit.id)}>
-                  ×
-                </button>
+                <div className={styles.habitRight}>
+                   <div className={styles.habitStreak}>🔥 {getStreak(habit)} days</div>
+                   <button className={styles.habitDel} onClick={() => deleteHabit(habit.id)}>
+                     ×
+                   </button>
+                </div>
               </div>
               <div className={styles.habitWeek}>
                 {weekDays.map((day) => {
                   const isCompleted = habit.completed_dates?.includes(day.dateString);
+                  const dayInitial = day.dayName.charAt(0);
                   return (
                     <div
                       key={day.dateString}
@@ -68,7 +74,7 @@ const HabitPanel: React.FC = () => {
                       onClick={() => toggleHabitDay(habit.id, day.dateString)}
                       title={day.dayName}
                     >
-                      {day.dayName.charAt(0)}
+                      {dayInitial}
                     </div>
                   );
                 })}

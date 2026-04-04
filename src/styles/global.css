@@ -1,19 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap');
 
 :root {
   --gold: #f5a623;
   --gold-light: #ffc857;
   --gold-dim: rgba(245, 166, 35, 0.3);
   --bg-night: #05060f;
-  --bg-day: hsl(210, 65%, 62%);
+  --bg-day: #1c2b3b; /* Sophisticated slate blue */
   --bg-dusk: #382050;
   --bg-dawn: #2c1244;
-  --surface: rgba(255, 255, 255, 0.06);
-  --surface2: rgba(255, 255, 255, 0.07);
+  --surface: rgba(255, 255, 255, 0.12);
+  --surface2: rgba(255, 255, 255, 0.16);
   --text: #e8e0d0;
   --text-dim: rgba(232, 224, 208, 0.5);
+  --btn-dark: #111115;
   --border: rgba(245, 166, 35, 0.15);
   --radius: 16px;
+  --font-header: 'Outfit', sans-serif;
+  --font-body: 'Instrument Sans', sans-serif;
 }
 
 * {
@@ -23,12 +26,20 @@
 }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body);
   color: var(--text);
-  height: 100vh;
-  overflow: hidden;
-  transition: background 4s ease;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden; /* Only lock horizontal scrolling */
+  transition: background 2s ease;
   background: var(--bg-night);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100%;
+  width: 100%;
 }
 
 /* Subtle vignette */
@@ -57,7 +68,8 @@ body::before {
 
 /* Typography utilities */
 .font-mono {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-header);
+  font-weight: 600;
 }
 
 .font-serif {
@@ -65,7 +77,7 @@ body::before {
 }
 
 .font-sans {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body);
 }
 
 /* Animation utilities */

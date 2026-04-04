@@ -5,6 +5,7 @@ import ProgressRing from '../time/ProgressRing';
 import WeekBars from '../time/WeekBars';
 import MonthGrid from '../time/MonthGrid';
 import YearRing from '../time/YearRing';
+import { useQuotes } from '../../hooks/useQuotes';
 import styles from './DashboardPanel.module.css';
 
 const defaultQuotes: string[] = [
@@ -22,21 +23,25 @@ const defaultQuotes: string[] = [
 
 const DashboardPanel: React.FC = () => {
   const { username, birthDate, lifeExpectancy, setActivePanel } = useApp();
+  const { quotes: userQuotes } = useQuotes();
   const timeData = useTime(birthDate, lifeExpectancy);
   const [showQuote, setShowQuote] = useState<boolean>(false);
   const [currentQuote, setCurrentQuote] = useState<number>(0);
+
+  // Quote source: User quotes preferentially, then defaults
+  const activeQuotes = userQuotes.length > 0 ? userQuotes.map(q => q.text) : defaultQuotes;
 
   // Quote rotation
   useEffect(() => {
     const interval = setInterval(() => {
       setShowQuote(prev => !prev);
       if (showQuote) {
-        setCurrentQuote(prev => (prev + 1) % defaultQuotes.length);
+        setCurrentQuote(prev => (prev + 1) % activeQuotes.length);
       }
     }, 8000);
 
     return () => clearInterval(interval);
-  }, [showQuote]);
+  }, [showQuote, activeQuotes.length]);
 
   // Hour markers: 00, 15, 30, 45
   const hourMarkers = [
@@ -71,7 +76,7 @@ const DashboardPanel: React.FC = () => {
         <div className={styles.dateStr}>{timeData.date}</div>
         <div className={styles.greetingContainer}>
           <div className={`${styles.greetingText} ${showQuote ? styles.quote : ''}`}>
-            {showQuote ? defaultQuotes[currentQuote] : `${timeData.greeting}${username ? `, ${username}` : ''}`}
+            {showQuote ? activeQuotes[currentQuote] : `${timeData.greeting}${username ? `, ${username}` : ''}`}
           </div>
         </div>
       </div>
@@ -83,6 +88,7 @@ const DashboardPanel: React.FC = () => {
           percentage={timeData.hour.percentage}
           value={minSec}
           label="HOUR"
+          title="THIS HOUR"
           showHand={true}
           timeMarkers={hourMarkers}
         />
@@ -92,6 +98,7 @@ const DashboardPanel: React.FC = () => {
           percentage={timeData.day.percentage}
           value={hourMin}
           label="DAY"
+          title="THIS DAY"
           showHand={true}
           timeMarkers={dayMarkers}
         />

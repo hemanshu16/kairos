@@ -1,14 +1,34 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useApp } from '../../contexts/AppContext';
+import TimezoneSelector from './TimezoneSelector';
 import styles from './Navigation.module.css';
 
 const Navigation: React.FC = () => {
   const { activePanel, setActivePanel } = useApp();
-  const { user, signOut } = useAuth();
+  const { signOut } = useAuth();
   const [isLogoHovered, setIsLogoHovered] = useState<boolean>(false);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
-  const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || '';
+  // Sync fullscreen state if user exits via ESC
+  React.useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
 
   const handleSignOut = async () => {
     try {
@@ -101,18 +121,25 @@ const Navigation: React.FC = () => {
       </div>
 
       <div className={styles.navActions}>
-        <div className={styles.tzSelector}>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="10" />
-            <path d="M2 12h20" />
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-          </svg>
-          <span>Local Time</span>
-        </div>
+        <button 
+          className={styles.fullscreenBtn} 
+          onClick={toggleFullscreen}
+          title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+        >
+          {isFullscreen ? (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M8 3v5H3M16 3v5h5M8 21v-5H3M16 21v-5h5" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M15 3h6v6M9 21H3v-6M21 15v6h-6M3 9V3h6" />
+            </svg>
+          )}
+        </button>
+
+        <TimezoneSelector />
         
         <button className={styles.proBtn}>LIFETIME PRO</button>
-
-        {displayName && <span className={styles.username}>Hi, {displayName}</span>}
         <button className={styles.logoutBtn} onClick={handleSignOut}>
           LOGOUT
         </button>

@@ -1,38 +1,49 @@
-import React, { createContext, useContext, useEffect, useRef, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useCallback, ReactNode, useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { STORAGE_KEYS } from '../utils/storageKeys';
-import { useApp } from './AppContext';
+
+export type ReminderType = 'interval' | 'time';
+export type SoundType = 'chime' | 'bell' | 'ding' | 'gong' | 'digital';
+
+export interface Reminder {
+  id: string;
+  title: string;
+  message: string;
+  type: ReminderType;
+  intervalMinutes?: number; 
+  timeOfDay?: string; // "HH:MM"
+  soundType: SoundType;
+  enabled: boolean;
+  lastTriggered?: number; 
+}
 
 export interface BellSettings {
-  enabled: boolean;
-  intervalMinutes: number;
-  soundType: 'chime' | 'bell' | 'ding';
   volume: number;
-  promptActivity: boolean;
+  reminders: Reminder[];
 }
 
 const DEFAULT_SETTINGS: BellSettings = {
-  enabled: false,
-  intervalMinutes: 60,
-  soundType: 'chime',
   volume: 70,
-  promptActivity: true,
+  reminders: [],
 };
 
 interface BellContextType {
   settings: BellSettings;
-  updateSettings: (partial: Partial<BellSettings>) => void;
-  playSound: () => void;
+  updateVolume: (vol: number) => void;
+  addReminder: (r: Omit<Reminder, 'id'>) => void;
+  updateReminder: (id: string, updates: Partial<Reminder>) => void;
+  deleteReminder: (id: string) => void;
+  playSound: (type: SoundType) => void;
+  activeAlert: Reminder | null;
+  dismissAlert: () => void;
 }
 
 const BellContext = createContext<BellContextType | undefined>(undefined);
 
 export const BellProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [settings, setSettings] = useLocalStorage<BellSettings>(STORAGE_KEYS.BELL_SETTINGS, DEFAULT_SETTINGS);
-  const { setActivePanel } = useApp();
-  
+  const [activeAlert, setActiveAlert] = useState<Reminder | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
-  const lastFiredRef = useRef<number | null>(null);
 
   const getAudioCtx = useCallback(() => {
     if (!audioCtxRef.current) {
@@ -41,14 +52,11 @@ export const BellProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return audioCtxRef.current;
   }, []);
 
-  const playSound = useCallback(() => {
+  const playSound = useCallback((soundType: SoundType) => {
     try {
-      const { volume, soundType } = settings;
-      console.log(`[useBell] Playing sound: ${soundType} at volume ${volume}%`);
-      
+      const { volume } = settings;
       const ctx = getAudioCtx();
       if (ctx.state === 'suspended') {
-        console.log('[useBell] AudioContext was suspended, resuming...');
         ctx.resume();
       }
 
@@ -84,47 +92,115 @@ export const BellProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         tone(1046, 'sine', now, 0.001, 0.01, 1.8, 0.4);
         tone(1568, 'triangle', now, 0.002, 0.01, 1.2, 0.2);
         tone(2093, 'triangle', now, 0.002, 0.01, 0.8, 0.1);
-      } else {
+      } else if (soundType === 'ding') {
         tone(1200, 'sine', now, 0.002, 0.01, 0.35, 0.9);
         tone(1800, 'sine', now, 0.002, 0.01, 0.20, 0.4);
         tone(900, 'sine', now + 0.06, 0.002, 0.01, 0.30, 0.5);
+      } else if (soundType === 'gong') {
+        tone(300, 'sine', now, 0.05, 0.2, 4.0, 1.0);
+        tone(450, 'sine', now, 0.05, 0.1, 2.0, 0.5);
+        tone(600, 'triangle', now, 0.05, 0.05, 1.0, 0.3);
+      } else if (soundType === 'digital') {
+        tone(1400, 'square', now, 0.01, 0.05, 0.1, 0.4);
+        tone(2100, 'square', now + 0.1, 0.01, 0.05, 0.1, 0.4);
+        tone(2800, 'square', now + 0.2, 0.01, 0.05, 0.1, 0.4);
       }
     } catch (e) {
       console.warn('Bell audio error:', e);
     }
   }, [getAudioCtx, settings]);
 
-  // Interval checker (Background Singleton)
+  // Unified background loop
   useEffect(() => {
-    if (!settings.enabled) return;
-
     const interval = setInterval(() => {
       const now = new Date();
-      const totalMins = now.getHours() * 60 + now.getMinutes();
-      const intervalMins = Math.max(1, settings.intervalMinutes);
+      const currentDayMin = now.getHours() * 60 + now.getMinutes();
+      const currentHHMM = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+      
+      let needsSave = false;
+      const updatedReminders = settings.reminders.map(r => {
+        if (!r.enabled) return r;
 
-      if (totalMins % intervalMins === 0 && totalMins !== lastFiredRef.current) {
-        lastFiredRef.current = totalMins;
-        console.log(`[useBell] Triggered at ${now.toLocaleTimeString()}. Total mins: ${totalMins}, Interval: ${intervalMins}min`);
-        playSound();
-        if (settings.promptActivity) {
-          console.log('[useBell] Prompting activity log...');
-          setTimeout(() => setActivePanel('worklog'), 800);
+        let shouldTrigger = false;
+        
+        if (r.type === 'interval' && r.intervalMinutes) {
+          if (currentDayMin > 0 && currentDayMin % r.intervalMinutes === 0) {
+            // Check to avoid continuous firing within the same minute
+            if (r.lastTriggered !== currentDayMin) {
+              shouldTrigger = true;
+            }
+          }
+        } else if (r.type === 'time' && r.timeOfDay) {
+          if (r.timeOfDay === currentHHMM) {
+            if (r.lastTriggered !== currentDayMin) {
+              shouldTrigger = true;
+            }
+          }
         }
+
+        if (shouldTrigger) {
+          console.log(`[useReminders] Triggering ${r.title}`);
+          playSound(r.soundType);
+          setActiveAlert(r);
+          
+          if (Notification.permission === 'granted') {
+            new Notification(r.title, { body: r.message });
+          }
+          
+          needsSave = true;
+          return { ...r, lastTriggered: currentDayMin };
+        }
+        return r;
+      });
+
+      if (needsSave) {
+        setSettings(prev => ({ ...prev, reminders: updatedReminders }));
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [settings.enabled, settings.intervalMinutes, settings.promptActivity, playSound, setActivePanel]);
+  }, [settings.reminders, playSound, setSettings]);
 
-  const updateSettings = useCallback((partial: Partial<BellSettings>) => {
-    setSettings(prev => ({ ...prev, ...partial }));
+  // Methods
+  const addReminder = useCallback((r: Omit<Reminder, 'id'>) => {
+    const id = 'rem-' + Math.random().toString(36).substr(2, 9);
+    setSettings(prev => ({
+      ...prev,
+      reminders: [...(prev.reminders || []), { ...r, id }]
+    }));
   }, [setSettings]);
+
+  const updateReminder = useCallback((id: string, updates: Partial<Reminder>) => {
+    setSettings(prev => ({
+      ...prev,
+      reminders: prev.reminders.map(r => r.id === id ? { ...r, ...updates } : r)
+    }));
+  }, [setSettings]);
+
+  const deleteReminder = useCallback((id: string) => {
+    setSettings(prev => ({
+      ...prev,
+      reminders: prev.reminders.map(r => r.id === id ? { ...r, enabled: false } : r).filter(r => r.id !== id)
+    }));
+  }, [setSettings]);
+
+  const updateVolume = useCallback((vol: number) => {
+    setSettings(prev => ({ ...prev, volume: vol }));
+  }, [setSettings]);
+
+  const dismissAlert = useCallback(() => {
+    setActiveAlert(null);
+  }, []);
 
   const value: BellContextType = {
     settings,
-    updateSettings,
-    playSound
+    updateVolume,
+    addReminder,
+    updateReminder,
+    deleteReminder,
+    playSound,
+    activeAlert,
+    dismissAlert
   };
 
   return <BellContext.Provider value={value}>{children}</BellContext.Provider>;

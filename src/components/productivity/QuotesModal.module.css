@@ -1,0 +1,163 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modalContent {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(22, 24, 33, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.8);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: rgba(232, 224, 208, 0.6);
+  font-weight: 800;
+}
+
+.title svg {
+  width: 18px;
+  height: 18px;
+  color: #f5a623;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+.addSection {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #f5a623;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.addBtn {
+  background: #f5a623;
+  color: #111;
+  border: none;
+  border-radius: 10px;
+  padding: 0 20px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.listContainer {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 4px;
+}
+
+.listContainer::-webkit-scrollbar {
+  width: 4px;
+}
+
+.listContainer::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.quoteCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s;
+}
+
+.quoteCard:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.quoteText {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  line-height: 1.5;
+  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: rgba(255, 82, 82, 0.4);
+  cursor: pointer;
+  padding: 6px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.deleteBtn:hover {
+  color: #ff5252;
+  transform: scale(1.1);
+}
+
+.deleteBtn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.loading, .empty {
+  text-align: center;
+  padding: 40px 0;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 14px;
+  font-style: italic;
+}

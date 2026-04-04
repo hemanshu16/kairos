@@ -1,43 +1,53 @@
 .statsStrip {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(24px);
-  padding: 12px 24px;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  min-width: 600px;
+  background: rgba(12, 13, 20, 0.45);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  padding: 16px 50px;
   display: flex;
   justify-content: center;
-  gap: 60px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  z-index: 150;
+  gap: 70px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 100px;
+  z-index: 1500;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
 }
 
 .statItem {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 120px; /* Fixed width to prevent shifting */
 }
 
 .statLabel {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 2px;
-  color: rgba(232, 224, 208, 0.4);
-  font-weight: 700;
+  color: var(--text-dim);
+  font-weight: 800;
   margin-bottom: 4px;
   text-transform: uppercase;
+  font-family: var(--font-header);
 }
 
 .statVal {
-  font-size: 16px;
-  font-family: 'Space Mono', monospace;
-  color: #fff;
-  font-weight: 700;
+  font-size: 20px;
+  font-family: var(--font-header);
+  color: var(--text);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums; /* Monospaced digits to stop jittering */
+  letter-spacing: -0.5px;
 }
 
 .decSmall {
-  font-size: 10px;
-  color: rgba(232, 224, 208, 0.5);
+  font-size: 11px;
+  color: var(--text-dim);
+  opacity: 0.6;
   margin-left: 1px;
 }
 

@@ -146,6 +146,39 @@
   margin: 0;
 }
 
+.presetRow {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.presetBtn {
+  flex: 1;
+  background: rgba(245, 166, 35, 0.05);
+  color: #f5a623;
+  border: 1px solid rgba(245, 166, 35, 0.2);
+  border-radius: 16px;
+  padding: 16px 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font-header, 'DM Sans', sans-serif);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.presetBtn:hover {
+  background: rgba(245, 166, 35, 0.15);
+  transform: translateY(-2px);
+  border-color: rgba(245, 166, 35, 0.4);
+  box-shadow: 0 10px 24px rgba(245, 166, 35, 0.15);
+}
+
 .customActionRow {
   display: flex;
   justify-content: center;

@@ -53,9 +53,12 @@ const NotesPanel: React.FC = () => {
   return (
     <div className={styles.panel}>
       <div className={styles.header}>
-        <div className={styles.title}>YOUR NOTES</div>
+        <div className={styles.labelGroup}>
+          <div className={styles.preTitle}>ZENITH • THOUGHTS</div>
+          <div className={styles.title}>Your Notes</div>
+        </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          {loading && <div className={styles.loaderSmall}>Syncing...</div>}
+          {/* {loading && <div className={styles.loaderSmall}>Syncing...</div>} */}
           <button className={styles.addBtn} onClick={handleNewNote} disabled={loading}>
             + NEW NOTE
           </button>

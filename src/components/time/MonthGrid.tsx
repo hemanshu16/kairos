@@ -15,7 +15,7 @@ const MonthGrid: React.FC = () => {
   const timeData = useTime(birthDate, lifeExpectancy);
   
   const gridDays = useMemo(() => {
-    const now = new Date();
+    const now = timeData.now;
     const currentDate = now.getDate();
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
@@ -44,7 +44,7 @@ const MonthGrid: React.FC = () => {
     }
 
     return days;
-  }, []);
+  }, [timeData.now]);
 
   return (
     <div className={styles.cleanWidget}>
@@ -60,10 +60,6 @@ const MonthGrid: React.FC = () => {
         ))}
       </div>
 
-      <div className={styles.pct}>
-        {timeData.month.percentage.toFixed(2)}
-        <span className={styles.pctSmall}>%</span>
-      </div>
     </div>
   );
 };

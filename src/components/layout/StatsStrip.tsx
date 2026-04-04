@@ -8,11 +8,11 @@ const StatsStrip: React.FC = () => {
   const timeData = useTime(birthDate, lifeExpectancy);
 
   const stats = [
-    { label: 'HOUR', value: timeData.hour.percentage },
-    { label: 'DAY', value: timeData.day.percentage },
-    { label: 'WEEK', value: timeData.week.percentage },
-    { label: 'MONTH', value: timeData.month.percentage },
-    { label: 'YEAR', value: timeData.year.percentage },
+    { label: 'HOUR', value: timeData.hour.percentage, decimals: 2 },
+    { label: 'DAY', value: timeData.day.percentage, decimals: 4 },
+    { label: 'WEEK', value: timeData.week.percentage, decimals: 5 },
+    { label: 'MONTH', value: timeData.month.percentage, decimals: 5},
+    { label: 'YEAR', value: timeData.year.percentage, decimals: 6},
   ];
 
   return (
@@ -21,7 +21,7 @@ const StatsStrip: React.FC = () => {
         <div key={stat.label} className={styles.statItem}>
           <div className={styles.statLabel}>{stat.label}</div>
           <div className={styles.statVal}>
-            {stat.value.toFixed(2)}
+            {stat.value.toFixed(stat.decimals)}
             <span className={styles.decSmall}>%</span>
           </div>
         </div>

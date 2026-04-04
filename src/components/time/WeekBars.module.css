@@ -9,20 +9,22 @@
 }
 
 .cardTitle {
-  font-size: 11px;
-  letter-spacing: 2.5px;
-  color: rgba(232, 224, 208, 0.4);
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--text-dim);
   font-weight: 800;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.1);
+  font-family: var(--font-header);
 }
 
 .weekBars {
   display: flex;
-  gap: 10px;
+  gap: 12px; /* Increased from 10 */
   align-items: flex-end;
-  height: 90px;
-  margin: 10px 0;
+  height: 100px; /* Increased from 90 */
+  margin: 15px 0;
 }
 
 .barWrapper {
@@ -33,10 +35,10 @@
 }
 
 .barContainer {
-  width: 28px;
-  height: 60px;
+  width: 32px; /* Increased from 28 */
+  height: 70px; /* Increased from 60 */
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
+  border-radius: 9px;
   position: relative;
   overflow: hidden;
 }
@@ -62,11 +64,13 @@
 }
 
 .label {
-  font-size: 10px;
-  color: rgba(232, 224, 208, 0.4);
+  font-size: 11px;
+  color: var(--text); /* Dark Slate for visibility */
   letter-spacing: 1px;
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-header);
+  font-weight: 800;
   text-transform: uppercase;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
 }
 
 .currentLabel {
@@ -75,15 +79,16 @@
 }
 
 .pct {
-  font-family: 'Space Mono', monospace;
-  font-size: 16px;
-  color: #fff;
-  font-weight: 700;
+  font-family: var(--font-header);
+  font-size: 20px;
+  color: var(--text);
+  font-weight: 800;
+  text-shadow: 0 1px 15px rgba(0, 0, 0, 0.1);
 }
 
 .pctSmall {
   font-size: 10px;
-  color: rgba(232, 224, 208, 0.4);
+  color: var(--text-dim);
   margin-left: 2px;
 }
 

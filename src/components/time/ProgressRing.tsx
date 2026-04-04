@@ -4,18 +4,20 @@ import styles from './ProgressRing.module.css';
 interface TimeMarker {
   position: number;
   label: string;
+  title?: string;
 }
 
 export interface ProgressRingProps {
   percentage: number;
   value: string;
   label: string;
+  title?: string;
   size?: number;
   showHand?: boolean;
   timeMarkers?: TimeMarker[] | null;
 }
 
-const ProgressRing: React.FC<ProgressRingProps> = ({ percentage, value, label, size = 175, showHand = false, timeMarkers = null }) => {
+const ProgressRing: React.FC<ProgressRingProps> = ({ percentage, value, label, title, size = 175, showHand = false, timeMarkers = null }) => {
   // We'll use a fixed internal coordinate system (140x140) to match the HTML design
   // but scale the outer container using 'size' prop.
   const radius = 42;
@@ -35,6 +37,7 @@ const ProgressRing: React.FC<ProgressRingProps> = ({ percentage, value, label, s
 
   return (
     <div className={styles.cleanWidget}>
+      {title && <div className={styles.cardTitle}>{title}</div>}
       <div className={styles.ringWrap} style={{ width: size, height: size }}>
         <svg viewBox="0 0 140 140" className={styles.svg}>
           {/* Tick marks */}
@@ -61,9 +64,6 @@ const ProgressRing: React.FC<ProgressRingProps> = ({ percentage, value, label, s
                     key={idx}
                     x={x}
                     y={y}
-                    fill="rgba(232, 224, 208, 0.5)"
-                    fontSize="12"
-                    fontWeight="700"
                     textAnchor="middle"
                   >
                     {marker.label}
