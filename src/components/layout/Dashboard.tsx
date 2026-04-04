@@ -12,6 +12,8 @@ import Starfield from '../effects/Starfield';
 import SunMoonOrb from '../effects/SunMoonOrb';
 import FABMenu from '../fab/FABMenu';
 import StatsStrip from './StatsStrip';
+import NotifyModal from '../productivity/NotifyModal';
+import MusicModal from '../productivity/MusicModal';
 import { getTheme, applyTheme, getTimeDecimal } from '../../utils/skyTheme';
 import { useFocusManager } from '../../hooks/useFocusManager';
 import styles from './Dashboard.module.css';
@@ -83,6 +85,14 @@ const Dashboard: React.FC = () => {
             }} 
           />
         )
+      )}
+
+      {activePanel === 'notifications' && (
+        <NotifyModal onClose={() => setActivePanel('dashboard')} />
+      )}
+
+      {activePanel === 'music' && (
+        <MusicModal onClose={() => setActivePanel('dashboard')} />
       )}
 
       <FABMenu />

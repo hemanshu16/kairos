@@ -18,12 +18,16 @@ export const STORAGE_KEYS = {
   CUSTOM_BG: 'tc-custom-bg',
   SHOW_LIFE: 'tc-show-life',
 
+  // Audio & Notifications
+  BELL_SETTINGS: 'tc-bell-settings',
+  MUSIC_SETTINGS: 'tc-music-settings',
+  ACTIVITY_LOG: 'tc-activity-log',
+
   // Premium
   IS_PREMIUM: 'tc-premium',
 
   // App state
   LAST_ACTIVE: 'tc-last-active',
-  ACTIVITY_LOG: 'tc-activity-log',
 };
 
 export default STORAGE_KEYS;

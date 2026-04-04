@@ -1,5 +1,7 @@
 import { useAuth } from './contexts/AuthContext';
 import { AppProvider } from './contexts/AppContext';
+import { MusicProvider } from './contexts/MusicContext';
+import { BellProvider } from './contexts/BellContext';
 import Dashboard from './components/layout/Dashboard';
 import AuthScreen from './components/auth/AuthScreen';
 import './styles/global.css';
@@ -29,7 +31,11 @@ function App() {
       {!user && <AuthScreen />}
       {user && (
         <AppProvider>
-          <Dashboard />
+          <BellProvider>
+            <MusicProvider>
+              <Dashboard />
+            </MusicProvider>
+          </BellProvider>
         </AppProvider>
       )}
     </>
