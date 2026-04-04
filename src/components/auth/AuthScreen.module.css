@@ -6,7 +6,10 @@
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #05060f 0%, #0a0e1a 30%, #111628 60%, #0a0e1a 100%);
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 60px 0;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Background glows */
@@ -49,6 +52,7 @@
   z-index: 1;
   width: 100%;
   max-width: 440px;
+  margin: auto;
 }
 
 /* Branding */
@@ -238,20 +242,111 @@
   text-decoration: underline;
 }
 
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+  gap: 16px;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dividerText {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: rgba(232, 224, 208, 0.25);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Google Button */
+.googleBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 14px;
+  color: rgba(232, 224, 208, 0.8);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.googleBtn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(245, 166, 35, 0.3);
+  transform: translateY(-1px);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.googleIcon {
+  width: 18px;
+  height: 18px;
+}
+
 /* Responsive */
 @media (max-width: 480px) {
+  .authScreen {
+    padding: 20px 0;
+    align-items: flex-start; /* Better for long forms on small mobile */
+  }
+
   .container {
-    padding: 24px 16px;
-    gap: 28px;
+    padding: 20px 16px;
+    gap: 24px;
+    margin-top: 20px;
   }
 
   .logo {
-    font-size: 36px;
-    letter-spacing: 8px;
+    font-size: 32px;
+    letter-spacing: 6px;
+    margin-bottom: 8px;
+  }
+
+  .tagline {
+    font-size: 14px;
   }
 
   .authCard {
-    padding: 24px 20px;
+    padding: 28px 20px;
     border-radius: 16px;
+  }
+
+  .modeToggle {
+    margin-bottom: 20px;
+  }
+
+  .googleBtn {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .inputField {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+}
+
+@media (max-height: 700px) {
+  .container {
+    gap: 20px;
+    padding-top: 20px;
+  }
+  
+  .logo {
+    font-size: 32px;
   }
 }

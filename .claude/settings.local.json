@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Read(//c/Users/Admin/Hemanshu/Personal/Cloudflare/seeyourtime/**)"
+      "Read(//c/Users/Admin/Hemanshu/Personal/Cloudflare/seeyourtime/**)",
+      "WebSearch",
+      "WebFetch(domain:supabase.com)",
+      "Bash(npm install @supabase/supabase-js)",
+      "Bash(npm uninstall @clerk/react @clerk/themes)"
     ],
     "deny": [],
     "ask": []
