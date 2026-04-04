@@ -6,7 +6,7 @@ import styles from './Navigation.module.css';
 
 const Navigation: React.FC = () => {
   const { activePanel, setActivePanel } = useApp();
-  const { user, signOut } = useAuth();
+  const { signOut } = useAuth();
   const [isLogoHovered, setIsLogoHovered] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
@@ -29,7 +29,6 @@ const Navigation: React.FC = () => {
     }
   };
 
-  const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || '';
 
   const handleSignOut = async () => {
     try {

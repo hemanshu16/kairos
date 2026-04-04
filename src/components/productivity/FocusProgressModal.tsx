@@ -19,7 +19,6 @@ const FocusProgressModal: React.FC<FocusProgressModalProps> = ({
   breakTimeLeft,
   onStartBreak,
   onEndBreak,
-  onClose, 
   onStop 
 }) => {
   const [showBreakOptions, setShowBreakOptions] = useState(false);
