@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useMemo } from 'react';
 import { useAuth } from './AuthContext';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { STORAGE_KEYS } from '../utils/storageKeys';
@@ -66,7 +66,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   // UI state
   const [activePanel, setActivePanel] = useState<string>('dashboard');
 
-  const value: AppContextType = {
+  const value: AppContextType = useMemo(() => ({
     // User data (from Supabase)
     username,
     setUsername: setGuestName,
@@ -94,7 +94,26 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     // UI state
     activePanel,
     setActivePanel,
-  };
+  }), [
+    username, 
+    setGuestName, 
+    birthDate, 
+    setBirthDate, 
+    lifeExpectancy, 
+    setLifeExpectancy, 
+    timezone, 
+    setTimezone, 
+    use24Hour, 
+    setUse24Hour, 
+    customBg, 
+    setCustomBg, 
+    showLife, 
+    setShowLife, 
+    isPremium, 
+    setIsPremium, 
+    activePanel, 
+    setActivePanel
+  ]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };

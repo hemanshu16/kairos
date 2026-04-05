@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useRef, useCallback, ReactNode, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useCallback, ReactNode, useState, useMemo } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { STORAGE_KEYS } from '../utils/storageKeys';
 
@@ -192,7 +192,7 @@ export const BellProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setActiveAlert(null);
   }, []);
 
-  const value: BellContextType = {
+  const value: BellContextType = useMemo(() => ({
     settings,
     updateVolume,
     addReminder,
@@ -201,7 +201,16 @@ export const BellProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     playSound,
     activeAlert,
     dismissAlert
-  };
+  }), [
+    settings,
+    updateVolume,
+    addReminder,
+    updateReminder,
+    deleteReminder,
+    playSound,
+    activeAlert,
+    dismissAlert
+  ]);
 
   return <BellContext.Provider value={value}>{children}</BellContext.Provider>;
 };

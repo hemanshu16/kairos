@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useApp } from '../../contexts/AppContext';
 import Navigation from './Navigation';
 import DashboardPanel from './DashboardPanel';
@@ -7,40 +7,19 @@ import HabitPanel from '../productivity/HabitPanel';
 import NotesPanel from '../productivity/NotesPanel';
 import FocusSetupModal from '../productivity/FocusSetupModal';
 import FocusProgressModal from '../productivity/FocusProgressModal';
-import Starfield from '../effects/Starfield';
-import SunMoonOrb from '../effects/SunMoonOrb';
-import Clouds from '../effects/Clouds';
+import SkyBackground from '../effects/SkyBackground';
 import FABMenu from '../fab/FABMenu';
 import StatsStrip from './StatsStrip';
 import NotifyModal from '../productivity/NotifyModal';
 import QuotesModal from '../productivity/QuotesModal';
 import ThemesModal from '../productivity/ThemesModal';
 import GlobalReminderPopup from '../productivity/GlobalReminderPopup';
-import { getTheme, applyTheme, getTimeDecimal } from '../../utils/skyTheme';
-import { getZonedTime } from '../../utils/timeUtils';
 import { useFocusManager } from '../../hooks/useFocusManager';
 import styles from './Dashboard.module.css';
 
 const Dashboard: React.FC = () => {
-  const { activePanel, setActivePanel, timezone, customBg } = useApp();
+  const { activePanel, setActivePanel } = useApp();
   const { startSession, isRunning, timeLeft, session, stopSession, isBreak, breakTimeLeft, startBreak, endBreak } = useFocusManager();
-  const [timeFloat, setTimeFloat] = React.useState(() => getTimeDecimal(getZonedTime(timezone)));
-
-  // Dynamic sky gradient effect
-  useEffect(() => {
-    const updateTheme = () => {
-      const currentZonedTime = getZonedTime(timezone);
-      const newTimeFloat = getTimeDecimal(currentZonedTime);
-      setTimeFloat(newTimeFloat);
-      
-      const theme = getTheme(newTimeFloat);
-      applyTheme(theme, customBg);
-    };
-
-    updateTheme();
-    const interval = setInterval(updateTheme, 1000); // Check once per second
-    return () => clearInterval(interval);
-  }, [timezone, customBg]);
 
   const renderPanel = () => {
     switch (activePanel) {
@@ -60,9 +39,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className={styles.dashboard}>
-      <Starfield timeFloat={timeFloat} />
-      <Clouds timeFloat={timeFloat} />
-      <SunMoonOrb timeFloat={timeFloat} />
+      <SkyBackground />
       <Navigation />
       <main className={styles.main}>{renderPanel()}</main>
       

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useRef, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, useCallback, ReactNode, useMemo } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { STORAGE_KEYS } from '../utils/storageKeys';
 
@@ -95,7 +95,6 @@ export const MusicProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const selectTrack = useCallback((index: number) => {
     if (!audioRef.current) return;
     
-    const wasPlaying = isPlaying;
     audioRef.current.pause();
     audioRef.current.src = TRACKS[index].url;
     audioRef.current.load();
@@ -125,7 +124,7 @@ export const MusicProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     setSettings(prev => ({ ...prev, volume: vol }));
   }, [setSettings]);
 
-  const value: MusicContextType = {
+  const value: MusicContextType = useMemo(() => ({
     isPlaying,
     currentTrack: TRACKS[settings.currentTrackIndex],
     currentTrackIndex: settings.currentTrackIndex,
@@ -136,7 +135,16 @@ export const MusicProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     nextTrack,
     prevTrack,
     setVolume: setGlobalVolume
-  };
+  }), [
+    isPlaying,
+    settings.currentTrackIndex,
+    settings.volume,
+    playPause,
+    selectTrack,
+    nextTrack,
+    prevTrack,
+    setGlobalVolume
+  ]);
 
   return <MusicContext.Provider value={value}>{children}</MusicContext.Provider>;
 };
