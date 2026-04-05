@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import { useAuth } from './contexts/AuthContext';
 import { AppProvider } from './contexts/AppContext';
-import { MusicProvider } from './contexts/MusicContext';
 import { BellProvider } from './contexts/BellContext';
 import Dashboard from './components/layout/Dashboard';
 import AuthScreen from './components/auth/AuthScreen';
 import Onboarding from './components/onboarding/Onboarding';
 import './styles/global.css';
 
+import { STORAGE_KEYS } from './utils/storageKeys';
 const ONBOARDED_KEY = 'kairos_onboarded';
 
 function App() {
   const { user, loading } = useAuth();
   const [hasOnboarded, setHasOnboarded] = useState<boolean>(() => {
-    return localStorage.getItem(ONBOARDED_KEY) === 'true';
+    const onboarded = localStorage.getItem(ONBOARDED_KEY) === 'true';
+    const username = localStorage.getItem(STORAGE_KEYS.USERNAME);
+    return onboarded && !!username;
   });
   const [hasInteracted, setHasInteracted] = useState(false);
 
@@ -38,10 +40,10 @@ function App() {
   if (!hasOnboarded) {
     return (
       <Onboarding onComplete={(name) => {
-        localStorage.setItem('kairos_username', name);
-        localStorage.setItem(ONBOARDED_KEY, 'true');
-        setHasOnboarded(true);
-      }} />
+          localStorage.setItem(STORAGE_KEYS.USERNAME, JSON.stringify(name));
+          localStorage.setItem(ONBOARDED_KEY, 'true');
+          setHasOnboarded(true);
+        }} />
     );
   }
 
@@ -65,9 +67,7 @@ function App() {
     >
       <AppProvider>
         <BellProvider>
-          <MusicProvider>
-            <Dashboard />
-          </MusicProvider>
+          <Dashboard />
         </BellProvider>
       </AppProvider>
     </div>

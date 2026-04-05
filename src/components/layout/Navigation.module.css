@@ -39,7 +39,7 @@
   font-family: 'Crimson Pro', serif;
   font-style: italic;
   font-size: 13px;
-  color: rgba(232, 224, 208, 0.4);
+  color: rgba(232, 224, 208, 0.45);
   margin-top: 2px;
   transition: all 0.3s;
   white-space: nowrap;
@@ -143,10 +143,6 @@
   transition: background 0.2s;
 }
 
-.tzSelector:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
 .proBtn {
   background: linear-gradient(135deg, rgba(255, 200, 87, 0.1), rgba(245, 166, 35, 0.2));
   color: #ffc857;
@@ -166,7 +162,6 @@
   background: linear-gradient(135deg, #ffc857, #f5a623);
   color: #111;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rga(245, 166, 35, 0.3);
 }
 
 .fullscreenBtn {
@@ -187,19 +182,6 @@
   height: 18px;
 }
 
-.fullscreenBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(245, 166, 35, 0.4);
-  transform: scale(1.1);
-}
-
-.username {
-  font-size: 12px;
-  color: rgba(232, 224, 208, 0.6);
-  font-weight: 500;
-  white-space: nowrap;
-}
-
 .logoutBtn {
   background: transparent;
   border: 1px solid transparent;
@@ -214,9 +196,62 @@
   letter-spacing: 1px;
 }
 
-.logoutBtn:hover {
-  background: rgba(255, 82, 82, 0.1);
-  border-color: rgba(255, 82, 82, 0.3);
-  color: #ff5252;
+@media (max-width: 1024px) {
+  .navActions {
+    width: auto;
+  }
+  .navLogoGroup {
+    width: auto;
+  }
+  .navLinks {
+    max-width: 450px;
+  }
 }
 
+@media (max-width: 768px) {
+  .nav {
+    padding: 0 12px;
+    height: 60px;
+  }
+  .navBrand {
+    font-size: 16px;
+    letter-spacing: 2px;
+  }
+  .navMeaning {
+    display: none;
+  }
+  .navLinks {
+    max-width: none;
+    margin: 0 10px;
+  }
+  .navTab {
+    padding: 4px;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    gap: 3px;
+  }
+  .navTab svg {
+    width: 18px;
+    height: 18px;
+  }
+  .navLabel {
+    display: none;
+  }
+  .navActions {
+    gap: 8px;
+  }
+  .proBtn, .logoutBtn {
+    display: none;
+  }
+  .tzSelector {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+  .fullscreenBtn {
+    padding: 5px;
+  }
+  .fullscreenBtn svg {
+    width: 14px;
+    height: 14px;
+  }
+}

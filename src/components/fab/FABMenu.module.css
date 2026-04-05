@@ -24,8 +24,8 @@
   background: transparent;
   border: 1px solid transparent;
   border-radius: 16px;
-  width: 80px;
-  height: 72px;
+  width: 90px;
+  height: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,8 +46,8 @@
 }
 
 .fabBtn svg {
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   stroke-width: 1.6;
 }
 

@@ -5,8 +5,8 @@ import TimezoneSelector from './TimezoneSelector';
 import styles from './Navigation.module.css';
 
 const Navigation: React.FC = () => {
+  const { user, signOut } = useAuth();
   const { activePanel, setActivePanel } = useApp();
-  const { signOut } = useAuth();
   const [isLogoHovered, setIsLogoHovered] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
@@ -140,9 +140,12 @@ const Navigation: React.FC = () => {
         <TimezoneSelector />
         
         <button className={styles.proBtn}>LIFETIME PRO</button>
-        <button className={styles.logoutBtn} onClick={handleSignOut}>
-          LOGOUT
-        </button>
+
+        {user && (
+          <button className={styles.logoutBtn} onClick={handleSignOut}>
+            LOGOUT
+          </button>
+        )}
       </div>
     </nav>
   );

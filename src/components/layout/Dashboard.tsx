@@ -13,7 +13,6 @@ import Clouds from '../effects/Clouds';
 import FABMenu from '../fab/FABMenu';
 import StatsStrip from './StatsStrip';
 import NotifyModal from '../productivity/NotifyModal';
-import MusicianModal from '../productivity/MusicModal';
 import QuotesModal from '../productivity/QuotesModal';
 import ThemesModal from '../productivity/ThemesModal';
 import GlobalReminderPopup from '../productivity/GlobalReminderPopup';
@@ -97,10 +96,6 @@ const Dashboard: React.FC = () => {
 
       {activePanel === 'notifications' && (
         <NotifyModal onClose={() => setActivePanel('dashboard')} />
-      )}
-
-      {activePanel === 'music' && (
-        <MusicianModal onClose={() => setActivePanel('dashboard')} />
       )}
 
       {activePanel === 'quotes' && (

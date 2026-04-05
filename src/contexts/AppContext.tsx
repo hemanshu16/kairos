@@ -5,6 +5,7 @@ import { STORAGE_KEYS } from '../utils/storageKeys';
 
 interface AppContextType {
   username: string;
+  setUsername: (name: string) => void;
   birthDate: string | null;
   setBirthDate: (date: string | null) => void;
   lifeExpectancy: number;
@@ -40,8 +41,14 @@ interface AppProviderProps {
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   // Supabase user data
   const { user } = useAuth();
-  const localUsername = localStorage.getItem('kairos_username') || '';
-  const username = user?.user_metadata?.full_name || user?.email?.split('@')[0] || localUsername;
+  // Persistent name from onboarding (guest mode or fallback for email login)
+  const [guestName, setGuestName] = useLocalStorage<string>(STORAGE_KEYS.USERNAME, '');
+
+  // Derivation priority: 
+  // 1. Guest name (locally stored during onboarding)
+  // 2. Supabase metadata (full_name from social providers)
+  // 3. Email prefix (fallback)
+  const username = guestName || user?.user_metadata?.full_name || user?.email?.split('@')[0] || '';
 
   // User preferences (still localStorage — these are app-specific, not auth)
   const [birthDate, setBirthDate] = useLocalStorage<string | null>(STORAGE_KEYS.BIRTHDATE, null);
@@ -60,8 +67,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [activePanel, setActivePanel] = useState<string>('dashboard');
 
   const value: AppContextType = {
-    // User data (from Clerk)
+    // User data (from Supabase)
     username,
+    setUsername: setGuestName,
 
     // User preferences
     birthDate,

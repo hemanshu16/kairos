@@ -1,3 +1,37 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 40px;
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.1),
+    inset 0 0 30px rgba(255, 255, 255, 0.02);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.container:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.15),
+    inset 0 0 40px rgba(255, 255, 255, 0.04);
+}
+
+.cardTitle {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-dim);
+  letter-spacing: 3px;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: var(--font-header);
+  opacity: 0.85;
+}
+
 .cleanWidget {
   display: flex;
   flex-direction: column;
@@ -6,17 +40,6 @@
   padding: 16px 0;
   flex: 1;
   min-width: 180px;
-}
-
-.cardTitle {
-  font-size: 13px;
-  letter-spacing: 3px;
-  color: var(--text-dim);
-  font-weight: 800;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.1);
-  font-family: var(--font-header);
 }
 
 .weekBars {

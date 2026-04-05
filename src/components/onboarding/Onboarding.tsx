@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Onboarding.module.css';
 
 interface OnboardingProps {
@@ -18,6 +18,15 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     }, 800);
   };
 
+  useEffect(() => {
+    if (step === 1) {
+      const timer = setTimeout(() => {
+        nextStep();
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [step]);
+
   const handleFinish = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim()) {
@@ -29,9 +38,8 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     <div className={styles.onboarding}>
       <div className={`${styles.content} ${isFading ? styles.fading : ''}`}>
         {step === 1 ? (
-          <div className={styles.stepOne} onClick={nextStep}>
+          <div className={styles.stepOne}>
             <h1 className={styles.introText}>Ready to use time efficiently?</h1>
-            <p className={styles.tapToContinue}>Click anywhere to begin</p>
           </div>
         ) : (
           <div className={styles.stepTwo}>

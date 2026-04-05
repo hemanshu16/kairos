@@ -88,7 +88,14 @@ const MusicModal: React.FC<MusicModalProps> = ({ onClose }) => {
               className={`${styles.trackItem} ${currentTrackIndex === index ? styles.active : ''}`}
               onClick={() => selectTrack(index)}
             >
-              <span className={styles.itemTitle}>{track.name}</span>
+              <div className={styles.trackTop}>
+                <span className={styles.itemTitle}>{track.name}</span>
+                {currentTrackIndex === index && isPlaying && (
+                  <div className={styles.playingBars}>
+                    <span></span><span></span><span></span>
+                  </div>
+                )}
+              </div>
               <span className={styles.itemMood}>{track.mood}</span>
             </div>
           ))}

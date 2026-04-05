@@ -9,12 +9,11 @@ export interface Track {
 }
 
 export const TRACKS: Track[] = [
-  { name: 'Rain on Roof', mood: 'Nature / Focus', url: 'https://actions.google.com/sounds/v1/weather/rain_on_roof.ogg' },
-  { name: 'Ocean Waves', mood: 'White Noise', url: 'https://actions.google.com/sounds/v1/water/waves_crashing_on_rock_beach.ogg' },
-  { name: 'Beautiful Piano', mood: 'Calm / Study', url: 'https://github.com/rafaelcastrocouto/lofi/raw/master/tracks/3.mp3' },
-  { name: 'Lo-Fi Chill', mood: 'Coffee Shop', url: 'https://github.com/rafaelcastrocouto/lofi/raw/master/tracks/1.mp3' },
-  { name: 'Deep Space', mood: 'Ambient Focus', url: 'https://github.com/rafaelcastrocouto/lofi/raw/master/tracks/2.mp3' },
-  { name: 'Summer Night', mood: 'Calm / Nature', url: 'https://archive.org/download/NatureSoundsCrickets/crickets.mp3' },
+  { name: 'Lofi Study Beats', mood: 'Calm / Focus', url: 'https://raw.githubusercontent.com/rafaelcastrocouto/lofi/master/tracks/1.mp3' },
+  { name: 'Deep Focus Ambient', mood: 'Intense Concentration', url: 'https://raw.githubusercontent.com/rafaelcastrocouto/lofi/master/tracks/2.mp3' },
+  { name: 'Pure Rainy Piano', mood: 'Soothing / Flow', url: 'https://raw.githubusercontent.com/rafaelcastrocouto/lofi/master/tracks/3.mp3' },
+  { name: 'Forest Ambience', mood: 'Natural Calm', url: 'https://archive.org/download/NatureSoundsCrickets/crickets.mp3' },
+  { name: 'Coffee Shop Lofi', mood: 'Comfort / Study', url: 'https://raw.githubusercontent.com/rafaelcastrocouto/lofi/master/tracks/4.mp3' },
 ];
 
 interface MusicSettings {
@@ -23,7 +22,7 @@ interface MusicSettings {
 }
 
 const DEFAULT_SETTINGS: MusicSettings = {
-  volume: 50,
+  volume: 40,
   currentTrackIndex: 0,
 };
 
@@ -47,13 +46,14 @@ export const MusicProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // Initialize audio once
   useEffect(() => {
     if (!audioRef.current) {
       audioRef.current = new Audio(TRACKS[settings.currentTrackIndex].url);
       audioRef.current.loop = true;
+      audioRef.current.volume = settings.volume / 100;
     }
-    audioRef.current.volume = settings.volume / 100;
-
+    
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -62,23 +62,53 @@ export const MusicProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     };
   }, []);
 
+  // Sync volume change
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = settings.volume / 100;
+    }
+  }, [settings.volume]);
+
+  // Primary Action: Play/Pause (Always from user click)
   const playPause = useCallback(() => {
     if (!audioRef.current) return;
+    
     if (isPlaying) {
       audioRef.current.pause();
+      setIsPlaying(false);
     } else {
-      audioRef.current.play().catch(console.error);
+      // Force reload if src is empty for some reason
+      if (!audioRef.current.src) {
+        audioRef.current.src = TRACKS[settings.currentTrackIndex].url;
+      }
+      
+      audioRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch(err => {
+          console.error("Playback block:", err);
+          setIsPlaying(false);
+        });
     }
-    setIsPlaying(!isPlaying);
-  }, [isPlaying]);
+  }, [isPlaying, settings.currentTrackIndex]);
 
+  // Primary Action: Select Track
   const selectTrack = useCallback((index: number) => {
     if (!audioRef.current) return;
+    
+    const wasPlaying = isPlaying;
+    audioRef.current.pause();
     audioRef.current.src = TRACKS[index].url;
+    audioRef.current.load();
+    
     setSettings(prev => ({ ...prev, currentTrackIndex: index }));
-    if (isPlaying) {
-      audioRef.current.play().catch(console.error);
-    }
+    
+    // Always start playing when a new track is selected (User explicitly clicked it)
+    audioRef.current.play()
+      .then(() => setIsPlaying(true))
+      .catch(err => {
+        console.error("Selection play fail:", err);
+        setIsPlaying(false);
+      });
   }, [isPlaying, setSettings]);
 
   const nextTrack = useCallback(() => {
@@ -92,8 +122,6 @@ export const MusicProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }, [settings.currentTrackIndex, selectTrack]);
 
   const setGlobalVolume = useCallback((vol: number) => {
-    if (!audioRef.current) return;
-    audioRef.current.volume = vol / 100;
     setSettings(prev => ({ ...prev, volume: vol }));
   }, [setSettings]);
 
