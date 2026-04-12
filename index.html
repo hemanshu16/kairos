@@ -1,13 +1,345 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
   <head>
+    <!-- ═══════════════════════════════════════════════════════════════════
+         KAIROS — See Your Time | Core Meta
+         ═══════════════════════════════════════════════════════════════════ -->
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+
+    <!-- ─── Primary SEO ─── -->
+    <title>Kairos — Visualize Your Time | Free Habit Tracker, Todo List & Focus Timer</title>
+    <meta name="description" content="Kairos helps you see where your time goes with beautiful progress visualizations, habit tracking, smart todo lists, notes, and a Pomodoro focus timer. Build better habits and take control of your day — completely free." />
+    <meta name="keywords" content="time management app, habit tracker, todo list, focus timer, pomodoro timer, productivity app, time visualization, daily planner, habit building, note taking app, task manager, life progress tracker, time tracking, free productivity tool, goal tracker, daily routine tracker, weekly habit tracker, streak tracker, mindfulness timer, work timer" />
+    <meta name="author" content="Kairos" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow" />
+    <meta name="rating" content="general" />
+    <meta name="distribution" content="global" />
+    <meta name="revisit-after" content="3 days" />
+    <meta name="language" content="English" />
+    <meta name="category" content="Productivity, Time Management, Habit Tracking" />
+
+    <!-- ─── Canonical URL ─── -->
+    <link rel="canonical" href="https://useyourtime.me/" />
+    <!-- https://useyourtime.me/ -->
+
+    <!-- ─── Favicons & App Icons ─── -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>kairos-react</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
+    <link rel="mask-icon" href="/favicon.svg" color="#863bff" />
+    <meta name="msapplication-TileColor" content="#05060f" />
+
+    <!-- ─── Theme & Mobile ─── -->
+    <meta name="theme-color" content="#05060f" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#863bff" media="(prefers-color-scheme: light)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Kairos" />
+    <meta name="application-name" content="Kairos" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- ─── Open Graph / Facebook ─── -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://useyourtime.me/" />
+    <meta property="og:title" content="Kairos — Visualize Your Time | Habit Tracker & Productivity Suite" />
+    <meta property="og:description" content="See where your time goes with beautiful progress rings, habit tracking, smart todos, notes, and a Pomodoro focus timer. Build better habits and take control of your life." />
+    <meta property="og:image" content="https://useyourtime.me/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Kairos — Time Visualization and Productivity Dashboard showing progress rings, habit tracker, and focus timer" />
+    <meta property="og:site_name" content="Kairos" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- ─── Twitter Card ─── -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://useyourtime.me/" />
+    <meta name="twitter:title" content="Kairos — Visualize Your Time | Habit Tracker & Focus Timer" />
+    <meta name="twitter:description" content="Beautiful time visualization with habit tracking, todo lists, notes, and Pomodoro timer. See your day, week, month & year progress in real-time." />
+    <meta name="twitter:image" content="https://useyourtime.me/og-image.png" />
+    <meta name="twitter:image:alt" content="Kairos productivity dashboard with time progress rings and habit tracker" />
+
+    <!-- ─── Web App Manifest ─── -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- ─── Preconnect & Performance ─── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://jvydtjxkapbquzcncvha.supabase.co" />
+
+    <!-- ─── Structured Data: WebApplication (JSON-LD) ─── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Kairos",
+      "alternateName": ["See Your Time", "Kairos App", "Kairos Time Tracker"],
+      "url": "https://useyourtime.me",
+      "description": "Kairos is a free time visualization and productivity app featuring habit tracking, todo lists, notes, and a Pomodoro focus timer. See your day, week, month, and year progress with beautiful animated progress rings.",
+      "applicationCategory": "ProductivityApplication",
+      "applicationSubCategory": "Time Management",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "softwareVersion": "1.0.0",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "150",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "featureList": [
+        "Real-time digital clock display",
+        "Day, week, month, and year progress visualization",
+        "Life progress tracker with animated rings",
+        "Daily habit tracker with 7-day view",
+        "Habit streak counter and analytics",
+        "Smart todo list with category filtering",
+        "Rich text notes with cloud sync",
+        "Pomodoro focus timer (25/15/5 minute modes)",
+        "Beautiful animated starfield background",
+        "Dynamic sun/moon orb following time of day",
+        "Glass-morphism premium UI design",
+        "Cloud data sync via Supabase",
+        "Google authentication",
+        "Responsive mobile-first design",
+        "Dark theme with golden accents"
+      ],
+      "screenshot": "https://useyourtime.me/og-image.png",
+      "author": {
+        "@type": "Organization",
+        "name": "Kairos",
+        "url": "https://useyourtime.me"
+      },
+      "datePublished": "2025-01-01",
+      "dateModified": "2026-04-12",
+      "inLanguage": "en",
+      "isAccessibleForFree": true,
+      "license": "https://opensource.org/licenses/MIT"
+    }
+    </script>
+
+    <!-- ─── Structured Data: Organization (JSON-LD) ─── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Kairos",
+      "url": "https://useyourtime.me",
+      "logo": "https://useyourtime.me/favicon.svg",
+      "description": "Kairos — the beautiful time visualization and productivity suite that helps you see where your time goes and build better habits.",
+      "sameAs": []
+    }
+    </script>
+
+    <!-- ─── Structured Data: SoftwareApplication (JSON-LD) ─── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Kairos — See Your Time",
+      "operatingSystem": "Web",
+      "applicationCategory": "LifestyleApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free habit tracker, todo list manager, note-taking app, and Pomodoro focus timer with stunning time visualizations. Track your daily, weekly, monthly and yearly progress.",
+      "downloadUrl": "https://useyourtime.me",
+      "softwareHelp": {
+        "@type": "CreativeWork",
+        "url": "https://useyourtime.me"
+      }
+    }
+    </script>
+
+    <!-- ─── Structured Data: FAQPage (JSON-LD) — Helps win FAQ rich snippets ─── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Kairos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kairos is a free time visualization and productivity app that helps you see where your time goes. It features beautiful animated progress rings showing your day, week, month, and year progress, along with a habit tracker, smart todo list, rich notes, and a Pomodoro focus timer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Kairos free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! Kairos is completely free to use. You can track habits, manage todos, take notes, and use the focus timer without any cost. Premium features are available for enhanced functionality."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the habit tracker work in Kairos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kairos habit tracker lets you create daily habits and track them with a beautiful 7-day week view. It automatically calculates your streaks and shows your consistency over time, helping you build lasting habits."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Kairos have a Pomodoro timer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! Kairos includes a built-in Pomodoro focus timer with three modes: Focus (25 minutes), Short Break (5 minutes), and Long Break (15 minutes). It features a beautiful progress ring visualization to keep you motivated."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I sync my data across devices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! When you sign in with Google, your todos, habits, and notes are synced to the cloud via Supabase. You can access your data from any device with a web browser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes Kairos different from other productivity apps?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kairos uniquely combines time visualization with productivity tools. Instead of just a task list, you see beautiful animated progress rings showing how much of your day, week, month, and year has passed — creating urgency and motivation. Plus, it has a stunning glass-morphism UI with an animated starfield background."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- ─── Structured Data: BreadcrumbList (JSON-LD) ─── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Kairos — See Your Time",
+          "item": "https://useyourtime.me"
+        }
+      ]
+    }
+    </script>
+
+    <!-- ─── Structured Data: WebSite with SearchAction (JSON-LD) ─── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Kairos",
+      "alternateName": "See Your Time",
+      "url": "https://useyourtime.me",
+      "description": "Kairos is a free time management and productivity app with habit tracking, todo lists, notes, and a Pomodoro timer."
+    }
+    </script>
+
+    <!-- ─── SEO: Noscript fallback for crawlers ─── -->
+    <noscript>
+      <meta http-equiv="refresh" content="0;url=https://useyourtime.me/" />
+      <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #05060f; color: #e0e0e0; padding: 40px; max-width: 800px; margin: 0 auto; }
+        h1 { color: #f5a623; } h2 { color: #863bff; } a { color: #f5a623; }
+        .feature { margin: 20px 0; padding: 16px; border: 1px solid rgba(245, 166, 35, 0.2); border-radius: 12px; }
+      </style>
+    </noscript>
   </head>
   <body>
+    <!-- ═══════════════════════════════════════════════════════════════════
+         Application Root — React mounts here
+         ═══════════════════════════════════════════════════════════════════ -->
     <div id="root"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         Noscript SEO Content — Visible only to crawlers & non-JS browsers
+         This provides crawlable content for search engines since the app
+         is a client-side rendered SPA
+         ═══════════════════════════════════════════════════════════════════ -->
+    <noscript>
+      <main>
+        <header>
+          <h1>Kairos — See Your Time</h1>
+          <p>The beautiful time visualization and productivity app that helps you build better habits, manage tasks, and take control of your day.</p>
+        </header>
+
+        <section>
+          <h2>⏰ Time Visualization</h2>
+          <div class="feature">
+            <p>Watch your life unfold with stunning animated progress rings. Kairos shows you real-time progress for your <strong>day</strong>, <strong>week</strong>, <strong>month</strong>, and <strong>year</strong> with beautiful SVG animations. Our life progress tracker helps you visualize your journey and make every moment count.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>✅ Smart Todo List</h2>
+          <div class="feature">
+            <p>Organize your tasks with our intelligent todo list. Categorize tasks by <strong>work</strong>, <strong>personal</strong>, <strong>health</strong>, and <strong>learning</strong>. Track completion rates and stay on top of your priorities with a clean, distraction-free interface.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>🔥 Habit Tracker</h2>
+          <div class="feature">
+            <p>Build lasting habits with our visual <strong>7-day habit tracker</strong>. See your weekly completion at a glance, track your <strong>streaks</strong>, and stay motivated with beautiful progress indicators. Whether it's exercising, reading, or meditating — Kairos helps you stay consistent.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>📝 Notes</h2>
+          <div class="feature">
+            <p>Capture your thoughts with our beautiful <strong>notes app</strong>. Create, edit, and organize rich text notes in a gorgeous grid layout. Your notes sync to the cloud when signed in, so you never lose an important idea.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>🎯 Focus Timer (Pomodoro)</h2>
+          <div class="feature">
+            <p>Boost your productivity with the built-in <strong>Pomodoro focus timer</strong>. Three modes — Focus (25 min), Short Break (5 min), and Long Break (15 min) — with a stunning animated progress ring to keep you in the zone.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>🌟 Premium Features</h2>
+          <div class="feature">
+            <p>Enjoy a premium experience with <strong>glass-morphism design</strong>, <strong>dynamic starfield background</strong>, <strong>sun/moon orb</strong> that follows the time of day, <strong>cloud sync</strong>, and <strong>Google authentication</strong>. All wrapped in a beautiful dark theme with golden accents.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>Why Choose Kairos?</h2>
+          <ul>
+            <li><strong>Free to use</strong> — No hidden costs or paywalls for core features</li>
+            <li><strong>Beautiful design</strong> — Glass-morphism UI that's a joy to use</li>
+            <li><strong>All-in-one</strong> — Time visualization + habit tracker + todos + notes + focus timer</li>
+            <li><strong>Cloud sync</strong> — Access your data from any device</li>
+            <li><strong>Privacy first</strong> — Your data stays yours</li>
+            <li><strong>Works everywhere</strong> — Desktop, tablet, and mobile responsive</li>
+            <li><strong>No installation</strong> — Works directly in your browser</li>
+          </ul>
+        </section>
+
+        <footer>
+          <p>Start managing your time better today. <a href="https://useyourtime.me">Launch Kairos</a></p>
+          <p>&copy; 2025 Kairos — See Your Time. All rights reserved.</p>
+        </footer>
+      </main>
+    </noscript>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

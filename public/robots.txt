@@ -1,0 +1,32 @@
+# Kairos — See Your Time
+# https://useyourtime.me
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /auth/
+
+# Sitemaps
+Sitemap: https://useyourtime.me/sitemap.xml
+
+# Crawl-delay (optional, respected by some bots)
+Crawl-delay: 1
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
+
+# GPTBot (AI crawlers)
+User-agent: GPTBot
+Allow: /
+
+# Common AI crawlers
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /

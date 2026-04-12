@@ -1,0 +1,25 @@
+{
+  "name": "Kairos — See Your Time | Habit Tracker & Productivity Suite",
+  "short_name": "Kairos",
+  "description": "Visualize your time with beautiful progress rings, track habits, manage todos, take notes, and focus with a Pomodoro timer. Free productivity app.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05060f",
+  "theme_color": "#863bff",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["productivity", "lifestyle", "utilities"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false,
+  "related_applications": []
+}
