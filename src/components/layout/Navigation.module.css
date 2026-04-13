@@ -13,7 +13,7 @@
   align-items: center;
   z-index: 100;
   padding: 0 32px;
-  height: 72px;
+  height: 80px;
 }
 
 .navLogoGroup {
@@ -38,9 +38,9 @@
 .navMeaning {
   font-family: 'Crimson Pro', serif;
   font-style: italic;
-  font-size: 13px;
+  font-size: 16px;
   color: rgba(232, 224, 208, 0.45);
-  margin-top: 2px;
+  margin-top: 4px;
   transition: all 0.3s;
   white-space: nowrap;
   line-height: 1;
@@ -186,10 +186,10 @@
   background: transparent;
   border: 1px solid transparent;
   color: rgba(232, 224, 208, 0.4);
-  padding: 6px 10px;
+  padding: 8px 12px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
   font-family: 'Space Mono', monospace;
   font-weight: bold;
   transition: all 0.2s;
